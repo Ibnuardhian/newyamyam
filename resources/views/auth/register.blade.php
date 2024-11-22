@@ -6,11 +6,11 @@
     <div class="section-store-auth" data-aos="fade-up">
         <div class="container">
             <div class="row align-items-center justify-content-center row-login">
-                <div class="col-lg-4">
-                    <h2>
-                        Memulai untuk beli handuk berkualitas <br />
-                        dengan cara terbaru
-                    </h2>
+                <h3 class="text-center">
+                    Memulai untuk beli snack <br />
+                    dengan cara terbaru
+                </h3>
+                <div class="col-lg-5">
                     <form class="mt-3" method="POST" action="{{ route('register') }}">
                         @csrf
                         <div class="form-group">

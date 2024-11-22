@@ -21,7 +21,7 @@
             <!-- Sidebar -->
             <div class="border-right" id="sidebar-wrapper">
                 <div class="text-center sidebar-heading">
-                    <img src="/images/dashboard-store-logo.svg" alt="" class="my-4" />
+                    <a href="/"><img src="/images/dashboard-store-logo.svg" alt="" class="my-4" /></a>
                 </div>
                 <div class="list-group list-group-flush">
                     <a href="{{ route('dashboard') }}"

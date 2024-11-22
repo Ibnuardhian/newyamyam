@@ -64,7 +64,7 @@ class ProductGalleryController extends Controller
     {
         $products = Product::all();
         
-        return view('pages.admin.product-gallery.create',[
+        return response()->view('pages.admin.product-gallery.create', [
             'products' => $products
         ]);
     }
