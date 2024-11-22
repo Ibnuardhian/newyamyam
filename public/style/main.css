@@ -21,7 +21,7 @@
   --white: #fff;
   --gray: #6c757d;
   --gray-dark: #343a40;
-  --primary: #007bff;
+  --primary: #781711;
   --secondary: #6c757d;
   --success: #28a745;
   --info: #17a2b8;
@@ -2280,32 +2280,24 @@ fieldset:disabled a.btn {
   border-color: #781711;
 }
 
-.btn-primary.nav-link {
-  color: #fff !important;
-}
-
-.btn-primary.nav-link:hover {
-  color: #781711 !important;
-}
-
 .btn-primary:focus, .btn-primary.focus {
   color: #fff;
-  background-color: #0069d9;
-  border-color: #0062cc;
+  background-color: #781711;
+  border-color: #871f19;
   box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
 }
 .btn-primary.disabled, .btn-primary:disabled {
   color: #fff;
-  background-color: #007bff;
-  border-color: #007bff;
+  background-color: #781711;
+  border-color: #871f19;
 }
 .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active, .show > .btn-primary.dropdown-toggle {
   color: #fff;
-  background-color: #0062cc;
-  border-color: #005cbf;
+  background-color: #781711;
+  border-color: #871f19;
 }
 .btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus, .show > .btn-primary.dropdown-toggle:focus {
-  box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
+  box-shadow: 0 0 0 0.2rem rgba(120, 23, 17, 0.5);
 }
 
 .btn-secondary {
@@ -2317,14 +2309,6 @@ fieldset:disabled a.btn {
   color: #fff;
   background-color: #5a6268;
   border-color: #545b62;
-}
-
-.btn-primary.nav-link {
-  color: #fff !important;
-}
-
-.btn-primary.nav-link:hover {
-  color: #781711 !important;
 }
 
 .btn-secondary:focus, .btn-secondary.focus {
@@ -3002,7 +2986,7 @@ input[type=button].btn-block {
 .dropdown-item.active, .dropdown-item:active {
   color: #fff;
   text-decoration: none;
-  background-color: #007bff;
+  background-color: #781711;
 }
 .dropdown-item.disabled, .dropdown-item:disabled {
   color: #6c757d;
@@ -4442,8 +4426,8 @@ input[type=button].btn-block {
 .page-item.active .page-link {
   z-index: 3;
   color: #fff;
-  background-color: #007bff;
-  border-color: #007bff;
+  background-color: #f8c04e;
+  border-color: #f8c04e;
 }
 .page-item.disabled .page-link {
   color: #6c757d;
@@ -4867,8 +4851,8 @@ a.badge-dark:focus, a.badge-dark.focus {
 .list-group-item.active {
   z-index: 2;
   color: #fff;
-  background-color: #007bff;
-  border-color: #007bff;
+  background-color: #f8c04e;
+  border-color: #f8c04e;
 }
 .list-group-item + .list-group-item {
   border-top-width: 0;

@@ -23,7 +23,7 @@
                         <a href="{{ route('register') }}" class="nav-link">Register</a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('login') }}" class="px-4 btn btn-primary nav-link">Login</a>
+                        <a href="{{ route('login') }}" class="px-4 btn btn-primary">Login</a>
                     </li>
                 @endguest
             </ul>

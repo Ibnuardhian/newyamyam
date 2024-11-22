@@ -20,7 +20,7 @@
       </div>
     </div>
     <div class="row row-copy mt-4 mt-sm-0">
-      <div class="col-md-6">
+      <div class="col-md-6" >
         <p>&copy; 2024 Kelompok 1 PPSI. All rights reserved.</p>
       </div>
     </div>

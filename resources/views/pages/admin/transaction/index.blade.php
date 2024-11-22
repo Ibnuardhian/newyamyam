@@ -60,9 +60,29 @@
             columns: [
                 { data: 'id', name: 'id' },
                 { data: 'user.name', name: 'user.name' },
-                { data: 'total_price', name: 'total_price' },
+                {
+                    data: 'total_price',
+                    name: 'total_price',
+                    render: function (data, type, row) {
+                        return new Intl.NumberFormat('id-ID', {
+                            minimumFractionDigits: 0,
+                            maximumFractionDigits: 0
+                        }).format(data);
+                    }
+                },
                 { data: 'transaction_status', name: 'transaction_status' },
-                { data: 'created_at', name: 'created_at' },
+                {
+                    data: 'created_at',
+                    name: 'created_at',
+                    render: function (data, type, row) {
+                        var date = new Date(data);
+                        var day = ("0" + date.getDate()).slice(-2);
+                        var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                        var month = monthNames[date.getMonth()];
+                        var year = date.getFullYear();
+                        return day + ' ' + month + ' ' + year;
+                    }
+                },
                 {
                     data: 'action',
                     name: 'action',

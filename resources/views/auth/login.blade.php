@@ -41,17 +41,15 @@
                         </div>
                         <button
                             type="submit"
-                            class="mt-4 btn btn-success btn-block w-75"
+                            class="mt-4 btn btn-primary btn-block w-75"
                         >
                             Login to My Account
                         </button>
-                        <span class="mt-10">Belum punya akun?</span>
-                        <a
-                            href="{{ route('register') }}"
-                            class="mt-2 btn btn-signup btn-block w-75"
-                        >
-                            Register
-                        </a>
+                        <div class="d-flex justify-content-between align-items-center mt-4 w-75">
+                            <span>Belum punya akun? 
+                                <a href="{{ route('register') }}" class="btn btn-info ml-1">Daftar</a>
+                            </span>
+                        </div>
                     </form>
                 </div>
             </div>

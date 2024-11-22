@@ -81,7 +81,7 @@
                         </div>
                         <button
                             type="submit"
-                            class="mt-4 btn btn-success btn-block"
+                            class="mt-4 btn btn-primary btn-block"
                             :disabled="this.email_unavailable"
                         >
                             Register Now

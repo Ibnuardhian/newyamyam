@@ -70,7 +70,7 @@
                   <div class="text-right col">
                     <button
                       type="submit"
-                      class="px-5 btn btn-success"
+                      class="px-5 btn btn-primary"
                     >
                       Simpan
                     </button>
