@@ -24,6 +24,9 @@ class IndoRegionProvinceSeeder extends Seeder
      */
     public function run()
     {
+        // Truncate the table
+        DB::table('provinces')->truncate();
+
         // Get Data
         $provinces = RawDataGetter::getProvinces();
 

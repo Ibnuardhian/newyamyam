@@ -24,6 +24,9 @@ class IndoRegionRegencySeeder extends Seeder
      */
     public function run()
     {
+        // Truncate the table
+        DB::table('regencies')->truncate();
+
         // Get Data
         $regencies = RawDataGetter::getRegencies();
 

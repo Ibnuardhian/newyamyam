@@ -6,6 +6,10 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Database\Seeders\IndoRegionProvinceSeeder;
+use Database\Seeders\IndoRegionRegencySeeder;
+use Database\Seeders\IndoRegionDistrictSeeder;
+use Database\Seeders\IndoRegionVillageSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -21,10 +25,17 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        User::create(attributes: [
-            'name' => 'ibnu',
-            'email'=> 'ibnu@gmail.com',
-            'password' => bcrypt('password'),
-        ]);
+        if (!User::where('email', 'ibnu@gmail.com')->exists()) {
+            User::create([
+                'name' => 'ibnu',
+                'email'=> 'ibnu@gmail.com',
+                'password' => bcrypt('password'),
+            ]);
+        }
+
+        $this->call(IndoRegionProvinceSeeder::class);
+        $this->call(IndoRegionRegencySeeder::class);
+        $this->call(IndoRegionDistrictSeeder::class);
+        $this->call(IndoRegionVillageSeeder::class);
     }
 }

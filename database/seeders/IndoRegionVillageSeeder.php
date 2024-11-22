@@ -24,6 +24,9 @@ class IndoRegionVillageSeeder extends Seeder
      */
     public function run()
     {
+        // Truncate the table
+        DB::table('villages')->truncate();
+
         // Get Data
         $villages = RawDataGetter::getVillages();
 
