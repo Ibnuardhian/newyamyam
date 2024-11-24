@@ -76,7 +76,7 @@
                                     />
                                 </div>
                                 <p class="categories-text">
-                                    {{  $category->name }}
+                                    {{  ucfirst($category->name) }}
                                 </p>
                             </a>
                         </div>

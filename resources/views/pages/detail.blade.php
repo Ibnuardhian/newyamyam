@@ -28,43 +28,33 @@
 
         <section class="mb-3 store-gallery" id="gallery">
             <div class="container">
-                <div class="row">
-                    <div class="col-lg-8" data-aos="zoom-in">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6" data-aos="zoom-in">
                         <transition name="slide-fade" mode="out-in">
-                            <img :src="photos[activePhoto].url" :key="photos[activePhoto].id" class="w-100 main-image"
-                                alt="" />
+                            <img :src="photos[activePhoto].url" :key="photos[activePhoto].id" class="main-image d-block mx-auto mb-3" alt="Product Image" width="250" height="250" />
                         </transition>
-                    </div>
-                    <div class="col-lg-2">
                         <div class="row">
-                            <div class="mt-2 col-3 col-lg-12 mt-lg-0" v-for="(photo, index) in photos"
-                                :key="photo.id" data-aos="zoom-in" data-aos-delay="100">
-                                <a href="#" @click="changeActive(index)">
-                                    <img :src="photo.url" class="w-100 thumbnail-image"
-                                        :class="{ active: index == activePhoto }" alt="" />
+                            <div class="col-3 col-lg-3" v-for="(photo, index) in photos" :key="photo.id" data-aos="zoom-in" data-aos-delay="100">
+                                <a href="#" @click.prevent="changeActive(index)">
+                                    <img :src="photo.url" class="thumbnail-image" :class="{ active: index == activePhoto }" alt="Thumbnail Image" style="width: 100%;"/>
                                 </a>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <div class="store-details-container" data-aos="fade-up">
-            <section class="store-heading">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-8">
-                            <h1 class="product-name">{{ $product->name }}</h1>
-                            <div class="price product-price">Rp {{ number_format($product->price, 0, ',', '.') }}</div>
-                        </div>
-                        <div class="col-lg-2" data-aos="zoom-in">
+                    <div class="col-lg-6">
+                        <div class="store-details-container" data-aos="fade-up">
+                            <section class="store-heading">
+                                <h1 class="products-name">{{ ucwords($product->name) }}</h1>
+                                <div class="price products-price">Rp {{ number_format($product->price, 0, ',', '.') }}</div>
+                            </section>
+                            <section class="store-description mt-4">
+                                {!! $product->description !!}
+                            </section>
                             @auth
-                                <form action="{{ route('detail-add', $product->id) }}" method="POST"
-                                    enctype="multipart/form-data">
+                                <form action="{{ route('detail-add', $product->id) }}" method="POST" enctype="multipart/form-data">
                                     @csrf
-                                    <button type="submit" class="px-4 mb-3 text-white btn btn-success btn-block">
-                                        Add to Cart
+                                    <button type="submit" class="px-4 mb-3 btn btn-primary btn-block">
+                                        Tambahkan ke keranjang
                                     </button>
                                 </form>
                             @else
@@ -75,17 +65,8 @@
                         </div>
                     </div>
                 </div>
-            </section>
-            <section class="store-description">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-12 col-lg-8">
-                            {!! $product->description !!}
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
+            </div>
+        </section>
     </div>
 @endsection
 

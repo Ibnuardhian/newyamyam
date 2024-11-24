@@ -9516,4 +9516,13 @@ footer p {
 .slide-fade-leave-to {
   transform: translateY(10px);
   opacity: 0.5s;
-}/*# sourceMappingURL=main.css.map */
+}
+.thumbnail-image {
+  cursor: pointer;
+}
+
+.thumbnail-image.active {
+  border: 2px solid #ff5722;
+}
+
+/*# sourceMappingURL=main.css.map */
