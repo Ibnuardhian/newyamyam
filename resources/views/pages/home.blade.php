@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    Rumah Handuk
+    Yamyam Snack Store
 @endsection
 
 @section('content')

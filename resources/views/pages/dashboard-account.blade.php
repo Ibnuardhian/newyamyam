@@ -96,7 +96,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="text-right col">
-                                            <button type="submit" class="px-5 btn btn-success">
+                                            <button type="submit" class="px-5 btn btn-primary">
                                                 Simpan
                                             </button>
                                         </div>

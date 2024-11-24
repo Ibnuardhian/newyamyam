@@ -14,7 +14,7 @@
         <div class="dashboard-heading">
             <h2 class="dashboard-title">Admin Dashboard</h2>
             <p class="dashboard-subtitle">
-                Admin Panel Rumah Handuk
+                Admin Panel Yamyam Snack
             </p>
         </div>
         <div class="dashboard-content">
