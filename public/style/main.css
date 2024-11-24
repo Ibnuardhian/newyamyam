@@ -9421,6 +9421,7 @@ footer p {
   margin-bottom: 20px;
   transition: all 0.2s ease-in-out;
 }
+
 .component-categories:hover {
   transform: scale(1.05);
   text-decoration: none;

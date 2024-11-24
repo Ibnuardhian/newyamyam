@@ -44,11 +44,10 @@
                     <div class="col-lg-6">
                         <div class="store-details-container" data-aos="fade-up">
                             <section class="store-heading">
-                                <h1 class="products-name">{{ ucwords($product->name) }}</h1>
-                                <div class="price products-price">Rp {{ number_format($product->price, 0, ',', '.') }}</div>
-                            </section>
-                            <section class="store-description mt-4">
-                                {!! $product->description !!}
+                                <h1 class="product-text">{{ ucwords($product->name) }}</h1>
+                                <div class="product-price">
+                                    Rp{{ number_format($product->price, 0, ',', '.') }}
+                                </div>
                             </section>
                             @auth
                                 <form action="{{ route('detail-add', $product->id) }}" method="POST" enctype="multipart/form-data">
@@ -62,6 +61,9 @@
                                     Login to Add
                                 </a>
                             @endauth
+                            <section class="store-description mt-4">
+                                {!! $product->description !!}
+                            </section>
                         </div>
                     </div>
                 </div>
@@ -72,7 +74,7 @@
 
 @push('addon-style')
     <style>
-        .product-name {
+        .product-text {
             font-size: 2rem;
             font-weight: bold;
             color: #333;

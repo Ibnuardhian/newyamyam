@@ -34,7 +34,7 @@ Store Category Page
                                 <img src="{{ Storage::url($category->photo) }}" alt="" class="w-100" />
                             </div>
                             <p class="categories-text">
-                                {{ucfirst($category->name) }}
+                                {{ucwords($category->name) }}
                             </p>
                         </a>
                     </div>
@@ -65,7 +65,14 @@ Store Category Page
                                 <i class="fas fa-search"></i>
                                 </button>
                             </div>
-                        </div>
+                            <div class="ml-2">
+                                <select name="sort" class="form-control" onchange="this.form.submit()">
+                                    <option value="">Sort by Price</option>
+                                    <option value="low_to_high" {{ request('sort') == 'low_to_high' ? 'selected' : '' }}>Urutkan dari termurah</option>
+                                    <option value="high_to_low" {{ request('sort') == 'high_to_low' ? 'selected' : '' }}>Urutkan dari termahal</option>
+                                </select>
+                            </div>
+                            </div>
                     </form>
                 </div>
             </div>
