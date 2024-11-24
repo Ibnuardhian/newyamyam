@@ -55,8 +55,8 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-8">
-                            <h1>{{ $product->name }}</h1>
-                            <div class="price">Rp {{ number_format($product->price) }}</div>
+                            <h1 class="product-name">{{ $product->name }}</h1>
+                            <div class="price product-price">Rp {{ number_format($product->price, 0, ',', '.') }}</div>
                         </div>
                         <div class="col-lg-2" data-aos="zoom-in">
                             @auth
@@ -89,7 +89,19 @@
     </div>
 @endsection
 
-
+@push('addon-style')
+    <style>
+        .product-name {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #333;
+        }
+        .product-price {
+            font-size: 1.5rem;
+            color: #ff5722;
+        }
+    </style>
+@endpush
 
 @push('addon-script')
     <script src="/vendor/vue/vue.js"></script>
