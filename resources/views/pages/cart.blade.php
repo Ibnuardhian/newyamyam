@@ -37,10 +37,10 @@
               <table class="table table-borderless table-cart">
                 <thead>
                   <tr>
-                    <td>Image</td>
-                    <td>Name &amp; Seller</td>
-                    <td>Price</td>
-                    <td>Menu</td>
+                    <td>Gambar</td>
+                    <td>Nama Produk</td>
+                    <td>Harga</td>
+                    <td>Aksi</td>
                   </tr>
                 </thead>
                 <tbody>
@@ -57,7 +57,7 @@
                         @endif
                       </td>
                       <td style="width: 35%;">
-                        <div class="product-title">{{ $cart->product->name }}</div>
+                        <div class="product-title">{{ ucfirst($cart->product->name) }}</div>
                       </td>
                       <td style="width: 35%;">
                         <div class="product-title">Rp {{ number_format($cart->product->price) }}</div>
@@ -98,40 +98,40 @@
                     class="form-control"
                     id="address_one"
                     name="address_one"
-                    value="Setra Duta Cemara"
+                    value="{{ $user->address_one }}"
+                    disabled
                   />
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group">
-                  <label for="address_two">Address 2</label>
+                <label for="address_two">Catatan untuk kurir</label>
                   <input
                     type="text"
                     class="form-control"
                     id="address_two"
                     name="address_two"
-                    value="Blok B2 No. 34"
+                    value="{{ $user->address_two }}"
+                    disabled
                   />
+                  <span style="font-size: smaller; display: block;">Warna rumah, patokan, pesan khusus, dll.</span>
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="form-group">
                   <label for="provinces_id">Province</label>
-                  <select name="provinces_id" id="provinces_id" class="form-control">
+                  <select name="provinces_id" id="provinces_id" class="form-control" v-model="provinces_id" disabled>
                     @foreach ($provinces as $province)
-                      <option value={{$province->id}}">{{ $province->name }}</option>
+                      <option value="{{ $province->id }}" {{ $province->id == $user->provinces_id ? 'selected' : '' }}>{{ $province->name }}</option>
                     @endforeach
                   </select>
-                  <select v-else class="form-control"></select>
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="form-group">
                   <label for="regencies_id">City</label>
-                  <select name="regencies_id" id="regencies_id" class="form-control">
-                    @foreach ($regencies as $regency)
-                      <option value="regency.id">{{$regency->name }}</option>
-                    @endforeach
+                  <select name="regencies_id" id="regencies_id" class="form-control" v-model="regencies_id" disabled>
+                    <option v-for="regency in regencies" :key="regency.id" :value="regency.id" :selected="regency.id === {{ $user->regencies_id }}">@{{ regency.name }}</option>
                   </select>
                 </div>
               </div>
@@ -143,7 +143,8 @@
                     class="form-control"
                     id="zip_code"
                     name="zip_code"
-                    value="40512"
+                    value="{{ $user->zip_code }}"
+                    disabled
                   />
                 </div>
               </div>
@@ -156,6 +157,7 @@
                     id="country"
                     name="country"
                     value="Indonesia"
+                    disabled
                   />
                 </div>
               </div>
@@ -167,7 +169,8 @@
                     class="form-control"
                     id="phone_number"
                     name="phone_number"
-                    value="+628 2020 11111"
+                    value="{{ substr($user->phone_number, 0, 4) . '-' . substr($user->phone_number, 4, 4) . '-' . substr($user->phone_number, 8) }}"
+                    disabled
                   />
                 </div>
               </div>
@@ -220,34 +223,22 @@
       var locations = new Vue({
         el: "#locations",
         mounted() {
-          this.getProvincesData();
+          this.provinces = @json($provinces);
+          this.regencies = @json($regencies);
         },
         data: {
-          provinces: null,
-          regencies: null,
-          provinces_id: null,
-          regencies_id: null,
+          provinces: [],
+          regencies: [],
+          provinces_id: "{{ $user->provinces_id }}",
+          regencies_id: "{{ $user->regencies_id }}",
         },
         methods: {
-          getProvincesData() {
-            var self = this;
-            axios.get('{{ route('api-provinces') }}')
-              .then(function (response) {
-                  self.provinces = response.data;
-              })
-          },
-          getRegenciesData() {
-            var self = this;
-            axios.get('{{ url('api/regencies') }}/' + self.provinces_id)
-              .then(function (response) {
-                  self.regencies = response.data;
-              })
-          },
+          // No need to fetch data from API
         },
         watch: {
           provinces_id: function (val, oldVal) {
             this.regencies_id = null;
-            this.getRegenciesData();
+            this.regencies = this.provinces.find(province => province.id == val).regencies;
           },
         }
       });

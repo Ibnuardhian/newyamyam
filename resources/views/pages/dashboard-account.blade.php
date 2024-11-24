@@ -92,7 +92,7 @@
                                             <div class="form-group">
                                                 <label for="phone_number">Nomor Telepon</label>
                                                 <input type="text" class="form-control" id="phone_number"
-                                                    name="phone_number" value="{{ $user->phone_number }}" 
+                                                    name="phone_number" value="{{ substr($user->phone_number, 0, 4) . '-' . substr($user->phone_number, 4, 4) . '-' . substr($user->phone_number, 8) }}" 
                                                     v-model="formattedPhoneNumber" @input="formatPhoneNumber" />
                                             </div>
                                         </div>

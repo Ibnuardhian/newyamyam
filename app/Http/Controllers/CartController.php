@@ -11,7 +11,6 @@ use App\Product;
 use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
-
 {
     /**
      * Show the application dashboard.
@@ -20,13 +19,15 @@ class CartController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
         $provinces = Province::all();
-        $regencies = Regency::all();
-        $carts = Cart::with(['product.galleries', 'user'])->where('users_id', Auth::user()->id)->get();
+        $regencies = Regency::where('province_id', (int) $user->provinces_id)->get();
+        $carts = Cart::with(['product.galleries', 'user'])->where('users_id', $user->id)->get();
         return view('pages.cart', [
             'carts' => $carts,
             'provinces' => $provinces,
-            'regencies' => $regencies
+            'regencies' => $regencies,
+            'user' => $user
         ]);
     }
 
@@ -43,6 +44,5 @@ class CartController extends Controller
     {
         return view('pages.success');
     }
-
 }
 
