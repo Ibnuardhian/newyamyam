@@ -31,6 +31,8 @@ class DashboardSettingController extends Controller
             'provinces' => $provinces,
             'regencies' => $regencies,
             'districts' => $districts,
+            'zip_code' => $user->zip_code,
+            'phone_number' => $user->phone_number,
         ]);
     }
 
@@ -42,6 +44,8 @@ class DashboardSettingController extends Controller
             'provinces_id' => 'required|exists:provinces,id',
             'regencies_id' => 'required|exists:regencies,id',
             'district_id' => 'required|exists:districts,id',
+            'zip_code' => 'required|string|max:10',
+            'phone_number' => 'required|string|max:15',
         ]);
 
         $item = Auth::user();

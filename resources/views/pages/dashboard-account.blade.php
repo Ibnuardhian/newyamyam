@@ -28,30 +28,31 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="name">Your Name</label>
+                                                <label for="name">Username</label>
                                                 <input type="text" class="form-control" id="name" name="name"
                                                     value="{{ $user->name }}" />
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="email">Your Email</label>
+                                                <label for="email">Email</label>
                                                 <input type="email" class="form-control" id="email" name="email"
                                                     value="{{ $user->email }}" />
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="address_one">Address 1</label>
+                                                <label for="address_one">Alamat 1</label>
                                                 <input type="text" class="form-control" id="address_one"
                                                     name="address_one" value="{{ $user->address_one }}" />
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="address_two">Address 2</label>
+                                                <label for="address_two">Catatan untuk kurir</label>
                                                 <input type="text" class="form-control" id="address_two"
                                                     name="address_two" value="{{ $user->address_two }}" />
+                                                    <span style="font-size: smaller; display: block;">Warna rumah, patokan, pesan khusus, dll.</span>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
@@ -91,7 +92,8 @@
                                             <div class="form-group">
                                                 <label for="phone_number">Nomor Telepon</label>
                                                 <input type="text" class="form-control" id="phone_number"
-                                                    name="phone_number" value="{{ $user->phone_number }}" />
+                                                    name="phone_number" value="{{ $user->phone_number }}" 
+                                                    v-model="formattedPhoneNumber" @input="formatPhoneNumber" />
                                             </div>
                                         </div>
                                     </div>
@@ -136,6 +138,7 @@
                 provinces_id: "{{ $user->provinces_id }}",
                 regencies_id: "{{ $user->regencies_id }}",
                 district_id: "{{ $user->district_id }}",
+                formattedPhoneNumber: "{{ $user->phone_number }}", // Add this line
             },
             methods: {
                 getProvincesData() {
@@ -162,6 +165,9 @@
                 setPreviousValues() {
                     document.getElementById('previous_regencies_id').value = this.regencies_id;
                     document.getElementById('previous_district_id').value = this.district_id;
+                },
+                formatPhoneNumber() {
+                    // Add phone number formatting logic here if needed
                 }
             },
             watch: {
