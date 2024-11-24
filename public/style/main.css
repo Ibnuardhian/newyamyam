@@ -222,6 +222,7 @@ th {
 label {
   display: inline-block;
   margin-bottom: 0.5rem;
+  text-align: left; /* Add this line to align text to the left */
 }
 
 button {
@@ -4232,7 +4233,6 @@ input[type=button].btn-block {
 
 .card-img-overlay {
   position: absolute;
-  top: 0;
   right: 0;
   bottom: 0;
   left: 0;
@@ -9461,19 +9461,20 @@ footer p {
 
 .card-body {
   padding: 10px;
-  text-align: center;
 }
 
 .wrapper-text {
   margin-bottom: 15px;
 }
 .wrapper-text .products-text {
+  text-align: center;
   font-weight: bold;
   font-size: 18px;
   color: #0c0d36;
   margin-top: 10px;
 }
 .wrapper-text .products-price {
+  text-align: center;
   font-weight: 500;
   font-size: 16px;
   color: #ff7158;
@@ -9481,7 +9482,7 @@ footer p {
 
 .card-body a:hover, 
 .card-body a:focus {
-  text-decoration: none; /* Hapus underline saat hover atau fokus */
+  text-decoration: none;
 }
 
 

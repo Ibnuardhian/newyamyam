@@ -79,11 +79,9 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         $data = $request->all();
-
-        $data['slug'] = Str::slug($request->name);
-
+        $data['name'] = strtolower($request->name);
+        $data['slug'] = Str::slug($data['name']);
         Product::create($data);
-
         return redirect()->route('product.index');
     }
 
@@ -127,13 +125,10 @@ class ProductController extends Controller
     public function update(ProductRequest $request, $id)
     {
         $data = $request->all();
-
+        $data['name'] = strtolower($request->name);
+        $data['slug'] = Str::slug($data['name']);
         $item = Product::findOrFail($id);
-
-        $data['slug'] = Str::slug($request->name);
-
         $item->update($data);
-
         return redirect()->route('product.index');
     }
 

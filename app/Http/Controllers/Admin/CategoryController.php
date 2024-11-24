@@ -77,7 +77,7 @@ class CategoryController extends Controller
     public function store(CategoryRequest $request)
     {
         $data = $request->all();
-
+        $data['name'] = strtolower($request->name);
         $data['slug'] = Str::slug($request->name);
         $data['photo'] = $request->file('photo')->store('assets/category', 'public');
 

@@ -18,6 +18,9 @@ use App\Http\Controllers\DashboardSettingController;
 use App\Http\Controllers\DashboardTransactionController;
 use App\Http\Controllers\SuccessController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProductUserController;
+
+// ...existing code...
 
 /*
 |--------------------------------------------------------------------------
@@ -53,6 +56,8 @@ Route::get('/register/success', [AuthRegisterController::class, 'success'])
 Route::get('/linkstorage', function () {
     Artisan::call('storage:link');
 });
+
+Route::get('/products/search', [ProductUserController::class, 'search'])->name('products.search');
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/cart', [CartController::class, 'index'])->name('cart');

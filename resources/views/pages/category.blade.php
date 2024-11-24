@@ -34,7 +34,7 @@ Store Category Page
                                 <img src="{{ Storage::url($category->photo) }}" alt="" class="w-100" />
                             </div>
                             <p class="categories-text">
-                                {{ $category->name }}
+                                {{ucfirst($category->name) }}
                             </p>
                         </a>
                     </div>
@@ -59,6 +59,15 @@ Store Category Page
                 </div>
             </div>
             <div class="row">
+                <div class="col-12" data-aos="fade-up">
+                    <form action="{{ route('products.search') }}" method="GET">
+                        <input type="hidden" name="category" value="{{ $selectedCategory }}">
+                        <input type="text" name="query" class="form-control" placeholder="Search Products...">
+                        <button type="submit" class="btn btn-primary mt-2">Search</button>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
                 @php $incrementProduct = 0 @endphp
                 @forelse ($products as $product)
                     <div class="col-6 col-md-4 col-lg-3 card-body wrapper-text" data-aos="fade-up" data-aos-delay="{{ $incrementProduct += 100 }}">
@@ -73,7 +82,7 @@ Store Category Page
                             </div>
                             <div>
                                 <div class="products-text">
-                                    {{ $product->name }}
+                                    {{ucfirst($product->name)  }}
                                 </div>
                                 <div class="products-price">
                                     Rp {{ number_format($product->price, 0, ',', '.') }}
