@@ -21,6 +21,8 @@
                             action="{{ route('dashboard-settings-redirect', 'dashboard-settings-account') }}" method="POST"
                             enctype="multipart/form-data">
                             @csrf
+                            <input type="hidden" name="previous_regencies_id" id="previous_regencies_id" value="{{ $user->regencies_id }}">
+                            <input type="hidden" name="previous_district_id" id="previous_district_id" value="{{ $user->district_id }}">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="row">
@@ -54,41 +56,40 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="provinces_id">Province</label>
-                                                <select name="provinces_id" id="provinces_id" class="form-control">
+                                                <label for="provinces_id">Provinsi</label>
+                                                <select name="provinces_id" id="provinces_id" class="form-control" v-model="provinces_id">
                                                     @foreach ($provinces as $province)
-                                                        <option value={{ $province->id }}>{{ $province->name }}</option>
+                                                        <option value="{{ $province->id }}" {{ $province->id == $user->provinces_id ? 'selected' : '' }}>{{ $province->name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="regencies_id">City</label>
-                                                <select name="regencies_id" id="regencies_id" class="form-control">
-                                                    @foreach ($regencies as $regency)
-                                                        <option value={{ $regency->id }}>{{ $regency->name }}</option>
-                                                    @endforeach
+                                                <label for="regencies_id">Kota</label>
+                                                <select name="regencies_id" id="regencies_id" class="form-control" v-model="regencies_id">
+                                                    <option v-for="regency in regencies" :key="regency.id" :value="regency.id">@{{ regency.name }}</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="zip_code">Postal Code</label>
+                                                <label for="districts_id">Kecamatan</label>
+                                                <select name="district_id" id="district_id" class="form-control" v-model="district_id">
+                                                    <option v-for="district in districts" :key="district.id" :value="district.id">@{{ district.name }}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="zip_code">Kode Pos</label>
                                                 <input type="text" class="form-control" id="zip_code" name="zip_code"
                                                     value="{{ $user->zip_code }}" />
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="country">Country</label>
-                                                <input type="text" class="form-control" id="country" name="country"
-                                                    value="{{ $user->country }}" />
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="phone_number">Mobile</label>
+                                                <label for="phone_number">Nomor Telepon</label>
                                                 <input type="text" class="form-control" id="phone_number"
                                                     name="phone_number" value="{{ $user->phone_number }}" />
                                             </div>
@@ -96,7 +97,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="text-right col">
-                                            <button type="submit" class="px-5 btn btn-primary">
+                                            <button type="submit" class="px-5 btn btn-primary" @click="setPreviousValues">
                                                 Simpan
                                             </button>
                                         </div>
@@ -121,12 +122,20 @@
             el: "#locations",
             mounted() {
                 this.getProvincesData();
+                if (this.provinces_id) {
+                    this.getRegenciesData();
+                }
+                if (this.regencies_id) {
+                    this.getDistrictsData();
+                }
             },
             data: {
-                provinces: null,
-                regencies: null,
-                provinces_id: null,
-                regencies_id: null,
+                provinces: @json($provinces),
+                regencies: [],
+                districts: [],
+                provinces_id: "{{ $user->provinces_id }}",
+                regencies_id: "{{ $user->regencies_id }}",
+                district_id: "{{ $user->district_id }}",
             },
             methods: {
                 getProvincesData() {
@@ -143,11 +152,27 @@
                             self.regencies = response.data;
                         })
                 },
+                getDistrictsData() {
+                    var self = this;
+                    axios.get('{{ url('api/districts') }}/' + self.regencies_id)
+                        .then(function(response) {
+                            self.districts = response.data;
+                        })
+                },
+                setPreviousValues() {
+                    document.getElementById('previous_regencies_id').value = this.regencies_id;
+                    document.getElementById('previous_district_id').value = this.district_id;
+                }
             },
             watch: {
                 provinces_id: function(val, oldVal) {
                     this.regencies_id = null;
+                    this.district_id = null;
                     this.getRegenciesData();
+                },
+                regencies_id: function(val, oldVal) {
+                    this.district_id = null;
+                    this.getDistrictsData();
                 },
             }
         });
