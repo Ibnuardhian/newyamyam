@@ -68,7 +68,7 @@
                                             <div class="form-group">
                                                 <label for="regencies_id">Kota</label>
                                                 <select name="regencies_id" id="regencies_id" class="form-control" v-model="regencies_id">
-                                                    <option v-for="regency in regencies" :key="regency.id" :value="regency.id">@{{ regency.name }}</option>
+                                                <option v-for="regency in regencies" :key="regency.id" :value="regency.id":selected="regency.id === {{ $user->regencies_id }}"> @{{ regency.name }}</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -76,7 +76,7 @@
                                             <div class="form-group">
                                                 <label for="districts_id">Kecamatan</label>
                                                 <select name="district_id" id="district_id" class="form-control" v-model="district_id">
-                                                    <option v-for="district in districts" :key="district.id" :value="district.id">@{{ district.name }}</option>
+                                                <option v-for="district in districts" :key="district.id" :value="district.id":selected="district.id === {{ $user->district_id }}">@{{ district.name }}</option>
                                                 </select>
                                             </div>
                                         </div>
