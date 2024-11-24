@@ -50,20 +50,22 @@ Store Category Page
     <section class="store-new-products">
         <div class="container">
             <div class="row">
-                <div class="col-12" data-aos="fade-up">
+                <div class="col-12 d-flex justify-content-between align-items-center" data-aos="fade-up">
                     @if ($selectedCategory == 'Semua Kategori')
                         <h5>Produk pada Semua Kategori</h5>
                     @else
                         <h5>Produk pada Kategori {{ $selectedCategory }}</h5>
                     @endif
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12" data-aos="fade-up">
-                    <form action="{{ route('products.search') }}" method="GET">
+                    <form action="{{ route('products.search') }}" method="GET" class="d-flex">
                         <input type="hidden" name="category" value="{{ $selectedCategory }}">
-                        <input type="text" name="query" class="form-control" placeholder="Search Products...">
-                        <button type="submit" class="btn btn-primary mt-2">Search</button>
+                        <div class="input-group">
+                            <input type="text" name="query" class="form-control" placeholder="Cari produk...">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-secondary">
+                                <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
