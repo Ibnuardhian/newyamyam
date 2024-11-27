@@ -25,12 +25,28 @@ class DetailController extends Controller
 
     public function add(Request $request, $id)
     {
-        $data = [
-            'products_id' => $id,
-            'users_id' => Auth::user()->id
-        ];
+        $product = Product::findOrFail($id);
+        $userId = Auth::user()->id;
+        $qty = $request->input('qty', 1);
 
-        Cart::create($data);
+        $cartItem = Cart::where('products_id', $id)->where('users_id', $userId)->first();
+
+        if ($cartItem) {
+            // Update existing cart item
+            $cartItem->qty += $qty;
+            $cartItem->total_weight = $cartItem->qty * $product->weight;
+            $cartItem->save();
+        } else {
+            // Create new cart item
+            $data = [
+                'products_id' => $id,
+                'users_id' => $userId,
+                'qty' => $qty,
+                'total_weight' => $product->weight * $qty
+            ];
+
+            Cart::create($data);
+        }
 
         return redirect()->route('cart');
     }

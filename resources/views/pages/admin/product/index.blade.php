@@ -30,6 +30,9 @@ Store Dashboard
                                             <th>Nama</th>
                                             <th>Kategori</th>
                                             <th>Harga</th>
+                                            <th>Berat (gram)</th>
+                                            <th>Stok</th>
+                                            <th>Status</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
@@ -70,6 +73,11 @@ Store Dashboard
                         }).format(data);
                     }
                 },
+                { data: 'weight', name: 'weight' },
+                { data: 'stock_qty', name: 'stock_qty' },
+                { data: 'instock_status', name: 'instock_status', render: function (data, type, row) {
+                    return data ? 'TERSEDIA' : 'HABIS';
+                } },
                 {
                     data: 'action',
                     name: 'action',

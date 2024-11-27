@@ -53,7 +53,34 @@
                   <div class="col-md-12">
                     <div class="form-group">
                       <label>Harga</label>
-                      <input type="number" class="form-control" name="price" required />
+                      <input type="text" class="form-control" name="price" required oninput="this.value = this.value.replace(/[^0-9]/g, '');" />
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label>Berat (gram)</label>
+                      <input type="text" class="form-control" name="weight" required oninput="this.value = this.value.replace(/[^0-9]/g, '');" />
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label>Jumlah Stok</label>
+                      <input type="text" class="form-control" name="stock_qty" required oninput="this.value = this.value.replace(/[^0-9]/g, '');" />
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label>Ambang Batas Stok Rendah</label>
+                      <input type="text" class="form-control" name="low_stock_threshold" required oninput="this.value = this.value.replace(/[^0-9]/g, '');" />
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label>Status Ketersediaan</label>
+                      <select name="instock_status" class="form-control" required>
+                        <option value="1">TERSEDIA</option>
+                        <option value="0">HABIS</option>
+                      </select>
                     </div>
                   </div>
                   <div class="col-md-12">
@@ -67,7 +94,7 @@
                   <div class="text-right col">
                     <button
                       type="submit"
-                      class="px-5 btn btn-success"
+                      class="px-5 btn btn-primary"
                     >
                       Simpan
                     </button>

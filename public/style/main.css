@@ -2205,6 +2205,7 @@ textarea.form-control {
   .form-inline .custom-select {
     width: auto;
   }
+
   .form-inline .form-check {
     display: flex;
     align-items: center;
@@ -2315,14 +2316,14 @@ fieldset:disabled a.btn {
 
 .btn-secondary:focus, .btn-secondary.focus {
   color: #fff;
-  background-color: #5a6268;
-  border-color: #545b62;
-  box-shadow: 0 0 0 0.2rem rgba(130, 138, 145, 0.5);
+  background-color: #781711;
+  border-color: #ffffff;
+  box-shadow: 0 0 0 0.2rem rgba(120, 23, 17, 0.5);
 }
 .btn-secondary.disabled, .btn-secondary:disabled {
   color: #fff;
-  background-color: #6c757d;
-  border-color: #6c757d;
+  background-color: #781711;
+  border-color: #781711;
 }
 .btn-secondary:not(:disabled):not(.disabled):active, .btn-secondary:not(:disabled):not(.disabled).active, .show > .btn-secondary.dropdown-toggle {
   color: #fff;

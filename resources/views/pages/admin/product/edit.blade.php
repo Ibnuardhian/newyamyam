@@ -61,6 +61,33 @@
                   </div>
                   <div class="col-md-12">
                     <div class="form-group">
+                      <label>Berat (gram)</label>
+                      <input type="text" class="form-control" name="weight" value="{{ $item->weight }}" required oninput="this.value = this.value.replace(/[^0-9]/g, '');" />
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label>Jumlah Stok</label>
+                      <input type="text" class="form-control" name="stock_qty" value="{{ $item->stock_qty }}" required oninput="this.value = this.value.replace(/[^0-9]/g, '');" />
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label>Ambang Batas Stok Rendah</label>
+                      <input type="text" class="form-control" name="low_stock_threshold" value="{{ $item->low_stock_threshold }}" required oninput="this.value = this.value.replace(/[^0-9]/g, '');" />
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label>Status Ketersediaan</label>
+                      <select name="instock_status" class="form-control" required>
+                        <option value="1" {{ $item->instock_status == 1 ? 'selected' : '' }}>TERSEDIA</option>
+                        <option value="0" {{ $item->instock_status == 0 ? 'selected' : '' }}>HABIS</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
                       <label>Deskripsi</label>
                       <textarea name="description" id="editor">{!! $item->description !!}</textarea>
                     </div>
@@ -84,7 +111,6 @@
   </div>
 </div>
 @endsection
-
 
 @push('addon-script')
   <script src="https://cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>

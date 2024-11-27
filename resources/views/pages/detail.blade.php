@@ -50,10 +50,20 @@
                                 </div>
                             </section>
                             @auth
-                                <form action="{{ route('detail-add', $product->id) }}" method="POST" enctype="multipart/form-data">
+                                <form action="{{ route('detail-add', $product->id) }}" method="POST" enctype="multipart/form-data" class="d-flex align-items-center">
                                     @csrf
-                                    <button type="submit" class="px-4 mb-3 btn btn-primary btn-block">
-                                        Tambahkan ke keranjang
+                                    <div class="input-group mr-2">
+                                        <div class="input-group-prepend">
+                                            <button class="btn btn-secondary" type="button" onclick="updateQty(this, -1)">-</button>
+                                        </div>
+                                        <input type="text" name="qty" value="1" min="1" class="form-control qty-input text-center" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-secondary" type="button" onclick="updateQty(this, 1)">+</button>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-secondary" title="Tambahkan ke keranjang">
+                                        <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
+                                        <span class="sr-only">Tambahkan ke keranjang</span>
                                     </button>
                                 </form>
                             @else
@@ -83,6 +93,10 @@
             font-size: 1.5rem;
             color: #ff5722;
         }
+        .input-group {
+            width: 20%;
+            margin-left: auto;
+        }
     </style>
 @endpush
 
@@ -111,6 +125,14 @@
                 },
             },
         });
+
+        function updateQty(button, increment) {
+            const input = button.parentElement.parentElement.querySelector('.qty-input');
+            const newValue = parseInt(input.value) + increment;
+            if (newValue >= 1) {
+                input.value = newValue;
+            }
+        }
     </script>
     <script src="/script/navbar-scroll.js"></script>
 @endpush

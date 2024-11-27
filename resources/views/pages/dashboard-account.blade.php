@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('title')
-    Account Settings
+My Account - Yamyam Snack
 @endsection
 
 @section('content')
@@ -30,28 +30,28 @@
                                             <div class="form-group">
                                                 <label for="name">Username</label>
                                                 <input type="text" class="form-control" id="name" name="name"
-                                                    value="{{ $user->name }}" />
+                                                    value="{{ old('name', $user->name) }}" />
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="email">Email</label>
                                                 <input type="email" class="form-control" id="email" name="email"
-                                                    value="{{ $user->email }}" />
+                                                    value="{{ old('email', $user->email) }}" />
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="address_one">Alamat 1</label>
                                                 <input type="text" class="form-control" id="address_one"
-                                                    name="address_one" value="{{ $user->address_one }}" />
+                                                    name="address_one" value="{{ old('address_one', $user->address_one) }}" />
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="address_two">Catatan untuk kurir</label>
                                                 <input type="text" class="form-control" id="address_two"
-                                                    name="address_two" value="{{ $user->address_two }}" />
+                                                    name="address_two" value="{{ old('address_two', $user->address_two) }}" />
                                                     <span style="font-size: smaller; display: block;">Warna rumah, patokan, pesan khusus, dll.</span>
                                             </div>
                                         </div>
@@ -60,7 +60,7 @@
                                                 <label for="provinces_id">Provinsi</label>
                                                 <select name="provinces_id" id="provinces_id" class="form-control" v-model="provinces_id">
                                                     @foreach ($provinces as $province)
-                                                        <option value="{{ $province->id }}" {{ $province->id == $user->provinces_id ? 'selected' : '' }}>{{ $province->name }}</option>
+                                                        <option value="{{ $province->id }}" {{ $province->id == old('provinces_id', $user->provinces_id) ? 'selected' : '' }}>{{ $province->name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -69,7 +69,7 @@
                                             <div class="form-group">
                                                 <label for="regencies_id">Kota</label>
                                                 <select name="regencies_id" id="regencies_id" class="form-control" v-model="regencies_id">
-                                                <option v-for="regency in regencies" :key="regency.id" :value="regency.id":selected="regency.id === {{ $user->regencies_id }}"> @{{ regency.name }}</option>
+                                                    <option v-for="regency in regencies" :key="regency.id" :value="regency.id"> @{{ regency.name }}</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -77,7 +77,7 @@
                                             <div class="form-group">
                                                 <label for="districts_id">Kecamatan</label>
                                                 <select name="district_id" id="district_id" class="form-control" v-model="district_id">
-                                                <option v-for="district in districts" :key="district.id" :value="district.id":selected="district.id === {{ $user->district_id }}">@{{ district.name }}</option>
+                                                    <option v-for="district in districts" :key="district.id" :value="district.id">@{{ district.name }}</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -85,14 +85,14 @@
                                             <div class="form-group">
                                                 <label for="zip_code">Kode Pos</label>
                                                 <input type="text" class="form-control" id="zip_code" name="zip_code"
-                                                    value="{{ $user->zip_code }}" />
+                                                    value="{{ old('zip_code', $user->zip_code) }}" oninput="this.value = this.value.replace(/[^0-9]/g, '');" />
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="phone_number">Nomor Telepon</label>
                                                 <input type="text" class="form-control" id="phone_number"
-                                                    name="phone_number" value="{{ substr($user->phone_number, 0, 4) . '-' . substr($user->phone_number, 4, 4) . '-' . substr($user->phone_number, 8) }}" 
+                                                    name="phone_number" value="{{ old('phone_number', substr($user->phone_number, 0, 4) . '-' . substr($user->phone_number, 4, 4) . '-' . substr($user->phone_number, 8)) }}" 
                                                     v-model="formattedPhoneNumber" @input="formatPhoneNumber" />
                                             </div>
                                         </div>
@@ -114,7 +114,6 @@
     </div>
 @endsection
 
-
 @push('addon-script')
     <script src="/vendor/vue/vue.js"></script>
     <script src="https://unpkg.com/vue-toasted"></script>
@@ -133,12 +132,12 @@
             },
             data: {
                 provinces: @json($provinces),
-                regencies: [],
-                districts: [],
+                regencies: @json($regencies),
+                districts: @json($districts),
                 provinces_id: "{{ $user->provinces_id }}",
                 regencies_id: "{{ $user->regencies_id }}",
                 district_id: "{{ $user->district_id }}",
-                formattedPhoneNumber: "{{ $user->phone_number }}", // Add this line
+                formattedPhoneNumber: "{{ $user->phone_number }}",
             },
             methods: {
                 getProvincesData() {

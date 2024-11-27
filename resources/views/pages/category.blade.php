@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-Store Category Page
+Category - Yamyam Snack
 @endsection
 
 @section('content')

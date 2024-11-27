@@ -40,6 +40,19 @@ class CartController extends Controller
         return redirect()->route('cart');
     }
 
+    public function update(Request $request, $id)
+    {
+        $cart = Cart::findOrFail($id);
+        $request->validate([
+            'qty' => 'required|integer|min:1'
+        ]);
+
+        $cart->qty = $request->qty;
+        $cart->save();
+
+        return redirect()->route('cart');
+    }
+
     public function success()
     {
         return view('pages.success');

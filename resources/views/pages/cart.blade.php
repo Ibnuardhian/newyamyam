@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
 @section('title')
-    Store Cart Page
+    Cart - Yamyam Snack
 @endsection
 
 @section('content')
     <!-- Page Content -->
     <div class="page-content page-cart">
-      <section>
+      <section
         class="store-breadcrumbs"
         data-aos="fade-down"
         data-aos-delay="100"
@@ -34,12 +34,14 @@
         <div class="container">
           <div class="row" data-aos="fade-up" data-aos-delay="100">
             <div class="col-12 table-responsive">
-              <table class="table table-borderless table-cart">
+              <table class="table table-borderless table-cart text-center">
                 <thead>
                   <tr>
                     <td>Gambar</td>
                     <td>Nama Produk</td>
                     <td>Harga</td>
+                    <td>Jumlah</td>
+                    <td>Subtotal</td>
                     <td>Aksi</td>
                   </tr>
                 </thead>
@@ -56,14 +58,34 @@
                           />
                         @endif
                       </td>
-                      <td style="width: 35%;">
+                      <td style="width: 20%;">
                         <div class="product-title">{{ ucfirst($cart->product->name) }}</div>
                       </td>
-                      <td style="width: 35%;">
-                        <div class="product-title">Rp {{ number_format($cart->product->price) }}</div>
+                      <td style="width: 15%;">
+                        <div class="product-title">Rp {{ number_format($cart->product->price, 0, '.', '.') }}</div>
+                      </td>
+                      <td style="width: 15%;">
+                        <div class="product-title">
+                            <form action="{{ route('cart-update', $cart->id) }}" method="POST" class="d-inline">
+                            @csrf
+                            @method('PATCH')
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                              <button class="btn btn-secondary" type="button" onclick="updateQty(this, -1)">-</button>
+                              </div>
+                              <input type="text" name="qty" value="{{ $cart->qty }}" min="1" class="form-control qty-input text-center" oninput="this.value = this.value.replace(/[^0-9]/g, ''); debounceUpdate(this)">
+                              <div class="input-group-append">
+                              <button class="btn btn-secondary" type="button" onclick="updateQty(this, 1)">+</button>
+                              </div>
+                            </div>
+                            </form>
+                        </div>
                       </td>
                       <td style="width: 20%;">
-                        <form action="{{ route('cart-delete', $cart->products_id) }}" method="POST">
+                        <div class="product-title">Rp {{ number_format($cart->product->price * $cart->qty, 0, '.', '.') }}</div>
+                      </td>
+                      <td style="width: 20%;">
+                        <form action="{{ route('cart-delete', $cart->id) }}" method="POST">
                           @method('DELETE')
                           @csrf
                           <button class="btn btn-remove-cart" type="submit">
@@ -72,7 +94,7 @@
                         </form>
                       </td>
                     </tr>
-                    @php $totalPrice += $cart->product->price @endphp
+                    @php $totalPrice += $cart->product->price * $cart->qty @endphp
                   @endforeach
                 </tbody>
               </table>
@@ -117,7 +139,7 @@
                   <span style="font-size: smaller; display: block;">Warna rumah, patokan, pesan khusus, dll.</span>
                 </div>
               </div>
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <div class="form-group">
                   <label for="provinces_id">Province</label>
                   <select name="provinces_id" id="provinces_id" class="form-control" v-model="provinces_id" disabled>
@@ -127,15 +149,15 @@
                   </select>
                 </div>
               </div>
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <div class="form-group">
                   <label for="regencies_id">City</label>
                   <select name="regencies_id" id="regencies_id" class="form-control" v-model="regencies_id" disabled>
-                    <option v-for="regency in regencies" :key="regency.id" :value="regency.id" :selected="regency.id === provinces_id">@{{ regency.name }}</option>
+                    <option v-for="regency in regencies" :key="regency.id" :value="regency.id" :selected="regency.id === regencies_id">@{{ regency.name }}</option>
                   </select>
                 </div>
               </div>
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <div class="form-group">
                   <label for="zip_code">Postal Code</label>
                   <input
@@ -148,20 +170,7 @@
                   />
                 </div>
               </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="country">Country</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="country"
-                    name="country"
-                    value="Indonesia"
-                    disabled
-                  />
-                </div>
-              </div>
-              <div class="col-md-6">
+              <div class="col-md-3">
                 <div class="form-group">
                   <label for="phone_number">Mobile</label>
                   <input
@@ -190,14 +199,14 @@
               </div>
               <div class="col-4 col-md-3">
                 <div class="product-title">Rp 0</div>
-                <div class="product-subtitle">Asuransi Produk</div>
+                <div class="product-subtitle">Diskon Produk</div>
               </div>
               <div class="col-4 col-md-2">
                 <div class="product-title">Rp 0</div>
                 <div class="product-subtitle">Biaya Pengiriman</div>
               </div>
               <div class="col-4 col-md-2">
-                <div class="product-title text-success">Rp {{ number_format($totalPrice ?? 0) }}</div>
+                <div class="product-title text-success">Rp {{ number_format($totalPrice ?? 0, 0, '.', '.') }}</div>
                 <div class="product-subtitle">Total</div>
               </div>
               <div class="col-8 col-md-3">
@@ -233,7 +242,6 @@
           regencies_id: "{{ $user->regencies_id }}",
         },
         methods: {
-          // No need to fetch data from API
         },
         watch: {
           provinces_id: function (val, oldVal) {
@@ -242,5 +250,29 @@
           },
         }
       });
+
+      function debounce(func, wait) {
+        let timeout;
+        return function(...args) {
+          const context = this;
+          clearTimeout(timeout);
+          timeout = setTimeout(() => func.apply(context, args), wait);
+        };
+      }
+
+      function debounceUpdate(input) {
+        debounce(function() {
+          input.form.submit();
+        }, 2000)();
+      }
+
+      function updateQty(button, increment) {
+        const input = button.parentElement.parentElement.querySelector('.qty-input');
+        const newValue = parseInt(input.value) + increment;
+        if (newValue >= 1) {
+          input.value = newValue;
+          debounceUpdate(input);
+        }
+      }
     </script>
 @endpush

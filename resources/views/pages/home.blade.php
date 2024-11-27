@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    Yamyam Snack Store
+    Yamyam Snack
 @endsection
 
 @section('content')

@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('title')
-    Store Dashboard
+    My Account - Yamyam Snack
 @endsection
 
 @section('content')
