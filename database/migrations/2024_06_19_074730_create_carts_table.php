@@ -15,6 +15,9 @@ return new class extends Migration
             $table->id();
             $table->integer('products_id');
             $table->integer('users_id');
+            $table->integer('qty');
+            $table->float('total_weight');
+            $table->string('coupon_code')->nullable();
             $table->timestamps();
         });
     }

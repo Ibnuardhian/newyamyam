@@ -11,7 +11,7 @@ class RegencyRajaongkir extends Model
     protected $table = 'regencies_rajaongkir';
 
     protected $fillable = [
-        'id', 'name' // Remove 'province_id' here
+        'id', 'name'
     ];
 
     public $timestamps = false;

@@ -18,6 +18,10 @@ return new class extends Migration
             $table->integer('price');
             $table->longText('description');
             $table->string('slug'); 
+            $table->integer('weight');
+            $table->integer('stock_qty');
+            $table->integer('low_stock_threshold');
+            $table->boolean('instock_status');
             $table->softDeletes();
             $table->timestamps();
         });

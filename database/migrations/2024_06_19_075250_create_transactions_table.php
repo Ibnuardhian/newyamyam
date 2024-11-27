@@ -15,8 +15,9 @@ return new class extends Migration
             $table->id();
 
             $table->integer('users_id');
-            $table->integer('inscurance_price');
+            $table->integer('discount_price'); // renamed from inscurance_price
             $table->integer('shipping_price');
+            $table->integer('qty');
             $table->integer('total_price');
             $table->string('transaction_status'); // PENDING, SUCCESS, CANCEL, FAILED, SHIPPING, SHIPPED
             $table->string('code'); 
