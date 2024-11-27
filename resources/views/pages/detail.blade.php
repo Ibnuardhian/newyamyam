@@ -54,20 +54,23 @@
                                     @csrf
                                     <div class="input-group mr-2">
                                         <div class="input-group-prepend">
-                                            <button class="btn btn-secondary" type="button" onclick="updateQty(this, -1)">-</button>
+                                            <button class="btn btn-primary" type="button" onclick="updateQty(this, -1)">-</button>
                                         </div>
                                         <input type="text" name="qty" value="1" min="1" class="form-control qty-input text-center" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
                                         <div class="input-group-append">
-                                            <button class="btn btn-secondary" type="button" onclick="updateQty(this, 1)">+</button>
+                                            <button class="btn btn-primary" type="button" onclick="updateQty(this, 1)">+</button>
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-secondary" title="Tambahkan ke keranjang">
+                                    <!-- <button type="submit" class="btn btn-primary" title="Tambahkan ke keranjang">
                                         <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
                                         <span class="sr-only">Tambahkan ke keranjang</span>
+                                    </button> -->
+                                    <button type="submit" class="btn btn-primary">
+                                        MASUKKAN KERANJANG
                                     </button>
                                 </form>
                             @else
-                                <a href="{{ route('login') }}" class="px-4 mb-3 btn btn-secondary btn-block">
+                                <a href="{{ route('login') }}" class="px-4 mb-3 btn btn-primary btn-block">
                                     Login to Add
                                 </a>
                             @endauth

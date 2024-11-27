@@ -48,7 +48,7 @@
                   @php
                     $totalWeight = 0;
                     $totalPrice = 0;
-                    $shippingCost = 0; // Initialize the shipping cost variable
+                    $shippingCost = 0;
                   @endphp
                   @foreach ($carts as $cart)
                     @php
@@ -111,7 +111,7 @@
               <hr />
             </div>
             <div class="col-12">
-              <h2 class="mb-4">Shipping Details</h2>
+              <h2 class="mb-4">Detail Pengiriman</h2>
             </div>
           </div>
           <form action="{{ route('checkout') }}" method="POST" enctype="multipart/form-data">
@@ -121,7 +121,7 @@
             <div class="mb-2 row" data-aos="fade-up" data-aos-delay="200" id="locations">
               <div class="col-md-6">
                 <div class="form-group">
-                  <label for="address_one">Address 1</label>
+                  <label for="address_one">Alamat</label>
                   <input
                     type="text"
                     class="form-control"
@@ -210,7 +210,8 @@
               </div>
               <div class="col-4 col-md-2">
               <div class="product-title" id="shipping-cost">Rp 0</div>
-              <div class="product-subtitle">Biaya Pengiriman</div>
+              <div class="product-subtitle" id="shipping-service">JNE - REG (1-2 hari)</div>
+              <div class="product-subtitle" id="shipping-service">Biaya Pengiriman</div>
               </div>
               <div class="col-4 col-md-2">
               <div class="product-title text-success">Rp {{ number_format($totalPrice + $shippingCost, 0, '.', '.') }}</div>
@@ -219,7 +220,7 @@
               <div class="col-8 col-md-3">
                 <button
                   type="submit"
-                  class="px-4 mt-4 btn btn-success btn-block"
+                  class="px-4 mt-4 btn btn-primary btn-block"
                 >
                   Checkout Now
                 </button>
@@ -299,8 +300,11 @@
             courier: "jne"
           });
           const shippingCost = response.data.cost;
+          const shippingService = response.data.service;
+          const shippingETD = response.data.etd;
           if (shippingCost) {
             document.getElementById('shipping-cost').innerText = 'Rp ' + shippingCost.toLocaleString('id-ID');
+            document.getElementById('shipping-service').innerText = 'JNE - ' + shippingService + ' ( ' + shippingETD + ' hari)';
             document.querySelector('input[name="shipping_cost"]').value = shippingCost;
             document.querySelector('.product-title.text-success').innerText = 'Rp ' + ({{ $totalPrice }} + shippingCost).toLocaleString('id-ID');
           }

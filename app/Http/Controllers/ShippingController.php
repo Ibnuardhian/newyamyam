@@ -27,30 +27,38 @@ class ShippingController extends Controller
                 'courier' => $courier
             ];
 
-            Log::info('Raja Ongkir Request:', $requestData);
 
             $response = Http::withHeaders([
                 'key' => config('services.rajaongkir.key')
             ])->post(config('services.rajaongkir.base_url') . 'cost', $requestData);
 
-            Log::info('Raja Ongkir Response:', $response->json());
-
             $results = $response->json()['rajaongkir']['results'][0]['costs'];
             $shippingCost = 50000; // Default shipping cost
+            $shippingService = 'REG';
+            $shippingETD = '1-2';
 
             foreach ($results as $result) {
                 if ($result['service'] === 'REG') {
                     $shippingCost = $result['cost'][0]['value'];
+                    $shippingService = $result['service'];
+                    $shippingETD = $result['cost'][0]['etd'];
                     break;
+                } elseif ($result['service'] === 'YES') {
+                    $shippingCost = $result['cost'][0]['value'];
+                    $shippingService = $result['service'];
+                    $shippingETD = $result['cost'][0]['etd'];
+                } elseif ($result['service'] === 'JTR') {
+                    $shippingCost = $result['cost'][0]['value'];
+                    $shippingService = $result['service'];
+                    $shippingETD = $result['cost'][0]['etd'];
                 }
             }
 
             $totalPrice = $request->total_price;
             $totalCost = $totalPrice + $shippingCost;
 
-            return response()->json(['cost' => $shippingCost, 'total' => $totalCost]);
+            return response()->json(['cost' => $shippingCost, 'total' => $totalCost, 'service' => $shippingService, 'etd' => $shippingETD]);
         } catch (\Exception $e) {
-            Log::error('Error calculating shipping cost:', ['exception' => $e]);
             return response()->json(['cost' => 50000, 'total' => $request->total_price + 50000]);
         }
     }

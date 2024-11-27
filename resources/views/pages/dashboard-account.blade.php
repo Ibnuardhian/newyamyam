@@ -9,9 +9,9 @@ My Account - Yamyam Snack
     <div class="section-content section-dashboard-home" data-aos="fade-up">
         <div class="container-fluid">
             <div class="dashboard-heading">
-                <h2 class="dashboard-title">My Account</h2>
+                <h2 class="dashboard-title">Profile</h2>
                 <p class="dashboard-subtitle">
-                    Update your current profile
+                    Perbarui Profilmu
                 </p>
             </div>
             <div class="dashboard-content">
@@ -42,7 +42,7 @@ My Account - Yamyam Snack
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="address_one">Alamat 1</label>
+                                                <label for="address_one">Alamat</label>
                                                 <input type="text" class="form-control" id="address_one"
                                                     name="address_one" value="{{ old('address_one', $user->address_one) }}" />
                                             </div>
