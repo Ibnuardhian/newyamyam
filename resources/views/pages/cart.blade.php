@@ -45,8 +45,16 @@
                   </tr>
                 </thead>
                 <tbody>
-                  @php $totalPrice = 0 @endphp
+                  @php
+                    $totalWeight = 0;
+                    $totalPrice = 0;
+                    $shippingCost = 0; // Initialize the shipping cost variable
+                  @endphp
                   @foreach ($carts as $cart)
+                    @php
+                      $totalWeight += $cart->product->weight * $cart->qty;
+                      $totalPrice += $cart->product->price * $cart->qty;
+                    @endphp
                     <tr>
                       <td style="width: 20%;">
                         @if($cart->product->galleries)
@@ -93,7 +101,6 @@
                         </form>
                       </td>
                     </tr>
-                    @php $totalPrice += $cart->product->price * $cart->qty @endphp
                   @endforeach
                 </tbody>
               </table>
@@ -110,6 +117,7 @@
           <form action="{{ route('checkout') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <input type="hidden" name="total_price" value="{{ $totalPrice }}">
+            <input type="hidden" name="shipping_cost" value="0">
             <div class="mb-2 row" data-aos="fade-up" data-aos-delay="200" id="locations">
               <div class="col-md-6">
                 <div class="form-group">
@@ -193,20 +201,20 @@
             </div>
             <div class="row" data-aos="fade-up" data-aos-delay="200">
               <div class="col-4 col-md-2">
-                <div class="product-title">Rp 0</div>
-                <div class="product-subtitle">Pajak</div>
+              <div class="product-title">Rp 0</div>
+              <div class="product-subtitle">Pajak</div>
               </div>
               <div class="col-4 col-md-3">
-                <div class="product-title">Rp 0</div>
-                <div class="product-subtitle">Diskon Produk</div>
+              <div class="product-title">Rp 0</div>
+              <div class="product-subtitle">Diskon Produk</div>
               </div>
               <div class="col-4 col-md-2">
-                <div class="product-title">Rp 0</div>
-                <div class="product-subtitle">Biaya Pengiriman</div>
+              <div class="product-title" id="shipping-cost">Rp 0</div>
+              <div class="product-subtitle">Biaya Pengiriman</div>
               </div>
               <div class="col-4 col-md-2">
-                <div class="product-title text-success">Rp {{ number_format($totalPrice ?? 0, 0, '.', '.') }}</div>
-                <div class="product-subtitle">Total</div>
+              <div class="product-title text-success">Rp {{ number_format($totalPrice + $shippingCost, 0, '.', '.') }}</div>
+              <div class="product-subtitle">Total</div>
               </div>
               <div class="col-8 col-md-3">
                 <button
@@ -281,5 +289,28 @@
           document.getElementById('delete-form-' + cartId).submit();
         }
       }
+
+      async function calculateShippingCost() {
+        try {
+          const response = await axios.post("{{ route('calculate-shipping') }}", {
+            origin: "{{ config('services.rajaongkir.origin') }}",
+            destination: "{{ DB::table('regencies_combined')->where('regencies_id', $user->regencies_id)->value('regency_rajaongkir_id') }}",
+            weight: {{ $totalWeight }},
+            courier: "jne"
+          });
+          const shippingCost = response.data.cost;
+          if (shippingCost) {
+            document.getElementById('shipping-cost').innerText = 'Rp ' + shippingCost.toLocaleString('id-ID');
+            document.querySelector('input[name="shipping_cost"]').value = shippingCost;
+            document.querySelector('.product-title.text-success').innerText = 'Rp ' + ({{ $totalPrice }} + shippingCost).toLocaleString('id-ID');
+          }
+        } catch (error) {
+          console.error("Error calculating shipping cost:", error);
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', function() {
+        calculateShippingCost();
+      });
     </script>
 @endpush

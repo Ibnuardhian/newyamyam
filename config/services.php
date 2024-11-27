@@ -37,4 +37,9 @@ return [
         'isSanitized'   => env('MIDTRANS_IS_SANITIZED', true),
         'is3ds'         => env('MIDTRANS_IS_3DS', true),                
     ],
+    'rajaongkir' => [
+        'key' => env('API_ONGKIR_KEY'),
+        'base_url' => env('API_ONGKIR_BASE_URL'),
+        'origin' => env('API_ONGKIR_ORIGIN'),
+    ],
 ];

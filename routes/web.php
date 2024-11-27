@@ -19,6 +19,7 @@ use App\Http\Controllers\DashboardTransactionController;
 use App\Http\Controllers\SuccessController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductUserController;
+use App\Http\Controllers\ShippingController; // Add this line
 
 // ...existing code...
 
@@ -58,6 +59,8 @@ Route::get('/linkstorage', function () {
 });
 
 Route::get('/products/search', [ProductUserController::class, 'search'])->name('products.search');
+
+Route::post('/calculate-shipping', [ShippingController::class, 'calculate'])->name('calculate-shipping');
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/cart', [CartController::class, 'index'])->name('cart');
