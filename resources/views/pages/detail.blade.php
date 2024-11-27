@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    Store Detail Page
+    {{ ucwords($product->name) }}
 @endsection
 
 @section('content')

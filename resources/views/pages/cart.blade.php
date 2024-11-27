@@ -42,7 +42,6 @@
                     <td>Harga</td>
                     <td>Jumlah</td>
                     <td>Subtotal</td>
-                    <td>Aksi</td>
                   </tr>
                 </thead>
                 <tbody>
@@ -59,7 +58,7 @@
                         @endif
                       </td>
                       <td style="width: 20%;">
-                        <div class="product-title">{{ ucfirst($cart->product->name) }}</div>
+                        <div class="product-title text-left">{{ ucfirst($cart->product->name) }}</div>
                       </td>
                       <td style="width: 15%;">
                         <div class="product-title">Rp {{ number_format($cart->product->price, 0, '.', '.') }}</div>
@@ -85,12 +84,12 @@
                         <div class="product-title">Rp {{ number_format($cart->product->price * $cart->qty, 0, '.', '.') }}</div>
                       </td>
                       <td style="width: 20%;">
-                        <form action="{{ route('cart-delete', $cart->id) }}" method="POST">
+                        <button class="btn btn-remove-cart" type="button" onclick="confirmDelete({{ $cart->id }})">
+                          <i class="fa-solid fa-trash"></i>
+                        </button>
+                        <form id="delete-form-{{ $cart->id }}" action="{{ route('cart-delete', $cart->id) }}" method="POST" style="display: none;">
                           @method('DELETE')
                           @csrf
-                          <button class="btn btn-remove-cart" type="submit">
-                            Remove
-                          </button>
                         </form>
                       </td>
                     </tr>
@@ -272,6 +271,14 @@
         if (newValue >= 1) {
           input.value = newValue;
           debounceUpdate(input);
+        } else {
+          confirmDelete(button.closest('tr').querySelector('form').id.split('-').pop());
+        }
+      }
+
+      function confirmDelete(cartId) {
+        if (confirm("Apakah yakin ingin menghapus produk dari keranjang?")) {
+          document.getElementById('delete-form-' + cartId).submit();
         }
       }
     </script>

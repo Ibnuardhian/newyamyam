@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-Category - Yamyam Snack
+Kategori - Yamyam Snack
 @endsection
 
 @section('content')
