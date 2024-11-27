@@ -10,6 +10,8 @@ use Database\Seeders\IndoRegionProvinceSeeder;
 use Database\Seeders\IndoRegionRegencySeeder;
 use Database\Seeders\IndoRegionDistrictSeeder;
 use Database\Seeders\IndoRegionVillageSeeder;
+use Database\Seeders\RegencyRajaOngkirSeeder;
+use Database\Seeders\RegenciesCombinedTableSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -37,5 +39,7 @@ class DatabaseSeeder extends Seeder
         $this->call(IndoRegionRegencySeeder::class);
         $this->call(IndoRegionDistrictSeeder::class);
         $this->call(IndoRegionVillageSeeder::class);
+        $this->call(RegencyRajaOngkirSeeder::class);
+        $this->call(RegenciesCombinedTableSeeder::class);
     }
 }

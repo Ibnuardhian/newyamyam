@@ -7,7 +7,7 @@
 @section('content')
     <!-- Page Content -->
     <div class="page-content page-cart">
-      <section
+      <section>
         class="store-breadcrumbs"
         data-aos="fade-down"
         data-aos-delay="100"

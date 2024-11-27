@@ -71,6 +71,13 @@ class RawDataGetter
         return $result;
     }
 
+    public static function getRegenciesRajaOngkir()
+    {
+        $result = self::getCsvData(self::$path.'/regencies_rajaongkir.csv');
+
+        return $result;
+    }
+
     /**
      * Get Data from CSV.
      *
