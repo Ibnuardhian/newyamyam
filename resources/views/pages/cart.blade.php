@@ -131,7 +131,7 @@
                 <div class="form-group">
                   <label for="regencies_id">City</label>
                   <select name="regencies_id" id="regencies_id" class="form-control" v-model="regencies_id" disabled>
-                    <option v-for="regency in regencies" :key="regency.id" :value="regency.id" :selected="regency.id === {{ $user->regencies_id }}">@{{ regency.name }}</option>
+                    <option v-for="regency in regencies" :key="regency.id" :value="regency.id" :selected="regency.id === provinces_id">@{{ regency.name }}</option>
                   </select>
                 </div>
               </div>

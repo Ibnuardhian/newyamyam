@@ -17,6 +17,7 @@ class CreateDiscountsTable extends Migration
             $table->id();
             $table->string('code', 50)->unique();
             $table->enum('discount_type', ['percentage', 'fixed']);
+            $table->text('description')->nullable();
             $table->decimal('discount_value', 10, 2);
             $table->dateTime('start_date')->nullable();
             $table->dateTime('end_date')->nullable();
