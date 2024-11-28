@@ -62,8 +62,10 @@ Route::get('/products/search', [ProductUserController::class, 'search'])->name('
 
 Route::post('/calculate-shipping', [ShippingController::class, 'calculate'])->name('calculate-shipping');
 
+
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/cart', [CartController::class, 'index'])->name('cart');
+    Route::post('/cart/add', [CartController::class, 'add'])->name('cart-add');
     Route::delete('/cart/{id}', [CartController::class, 'delete'])->name('cart-delete');
     Route::patch('/cart/update/{id}', [CartController::class, 'update'])->name('cart-update');
 

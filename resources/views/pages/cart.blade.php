@@ -118,6 +118,7 @@
             @csrf
             <input type="hidden" name="total_price" value="{{ $totalPrice }}">
             <input type="hidden" name="shipping_cost" value="0">
+            <input type="hidden" name="discount_price" value="0">
             <div class="mb-2 row" data-aos="fade-up" data-aos-delay="200" id="locations">
               <div class="col-md-6">
                 <div class="form-group">

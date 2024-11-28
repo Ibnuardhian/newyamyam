@@ -7,8 +7,9 @@ use App\Category;
 use App\Models\Cart;
 use App\Models\Province;
 use App\Models\Regency;
-use App\Product;
+use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class CartController extends Controller
 {
@@ -56,6 +57,41 @@ class CartController extends Controller
     public function success()
     {
         return view('pages.success');
+    }
+
+    public function add(Request $request)
+    {
+        try {
+            $request->validate([
+                'product_id' => 'required|integer|exists:products,id',
+                'qty' => 'required|integer|min:1'
+            ]);
+
+            $product = Product::find($request->product_id);
+            $totalWeight = $product->weight * $request->qty;
+
+            $cart = Cart::where('users_id', Auth::id())
+                        ->where('products_id', $request->product_id)
+                        ->first();
+
+            if ($cart) {
+                $cart->qty += $request->qty;
+                $cart->total_weight += $totalWeight;
+                $cart->save();
+            } else {
+                Cart::create([
+                    'users_id' => Auth::id(),
+                    'products_id' => $request->product_id,
+                    'qty' => $request->qty,
+                    'total_weight' => $totalWeight
+                ]);
+            }
+
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            Log::error('Error adding to cart: ' . $e->getMessage());
+            return response()->json(['success' => false, 'message' => 'Failed to add to cart'], 500);
+        }
     }
 }
 

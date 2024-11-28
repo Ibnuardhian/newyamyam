@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('transactions_id');
             $table->integer('products_id');
             $table->integer('price');
+            $table->integer('qty'); // Add qty column
             $table->string('shipping_status'); // PENDING/SHIPPING/SUCCESS
             $table->string('resi');
             $table->string('code'); 

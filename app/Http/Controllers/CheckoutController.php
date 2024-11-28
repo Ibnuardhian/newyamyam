@@ -29,8 +29,9 @@ class CheckoutController extends Controller
         $transaction = Transaction::create([
             'users_id' => Auth::user()->id,
             'inscurance_price' => 0,
-            'shipping_price' => 0,
+            'shipping_price' => $request->shipping_cost,
             'total_price' => $request->total_price,
+            'discount_price' => $request->discount_price ?? 0,
             'transaction_status' => 'PENDING',
             'code' => $code
         ]);
@@ -42,6 +43,7 @@ class CheckoutController extends Controller
                 'transactions_id' => $transaction->id,
                 'products_id' => $cart->product->id,
                 'price' => $cart->product->price,
+                'qty' => $cart->qty,
                 'shipping_status' => 'PENDING',
                 'resi' => '',
                 'code' => $trx
@@ -66,10 +68,10 @@ class CheckoutController extends Controller
                 'gross_amount' => (int) $request->total_price,
             ),
             'customer_details' => array(
-                'first_name'    => 'Galih Pratama',
-                'email'         => 'hanamura.iost@gmail.com'
+                'first_name'    => $user->name,
+                'email'         => $user->email
             ),
-            'enabled_payments' => array('gopay','bank_transfer'),
+            'enabled_payments' => array('gopay', 'bank_transfer', 'qris'),
             'vtweb' => array()
         );
 

@@ -22,8 +22,8 @@ class DashboardSettingController extends Controller
             $regencies = Regency::where('province_id', $user->provinces_id)->orderBy('name', 'ASC')->get();
         }
 
-        if ($user->regency_id) {
-            $districts = District::where('regency_id', $user->regency_id)->orderBy('name', 'ASC')->get();
+        if ($user->regencies_id) {
+            $districts = District::where('regency_id', $user->regencies_id)->orderBy('name', 'ASC')->get();
         }
 
         return view('pages.dashboard-account', [

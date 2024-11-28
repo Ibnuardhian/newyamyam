@@ -61,13 +61,12 @@
                                             <button class="btn btn-primary" type="button" onclick="updateQty(this, 1)">+</button>
                                         </div>
                                     </div>
-                                    <!-- <button type="submit" class="btn btn-primary" title="Tambahkan ke keranjang">
-                                        <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
-                                        <span class="sr-only">Tambahkan ke keranjang</span>
-                                    </button> -->
                                     <button type="submit" class="btn btn-primary">
-                                        MASUKKAN KERANJANG
+                                        BELI SEKARANG
                                     </button>
+                                <button type="button" class="btn btn-primary ml-2" onclick="addToCart({{ $product->id }})">
+                                    ADD TO CART
+                                </button>
                                 </form>
                             @else
                                 <a href="{{ route('login') }}" class="px-4 mb-3 btn btn-primary btn-block">
@@ -77,6 +76,12 @@
                             <section class="store-description mt-4">
                                 {!! $product->description !!}
                             </section>
+                            <div class="alert alert-success">
+                                Product added to cart successfully!
+                            </div>
+                            <div class="alert alert-danger">
+                                Failed to add product to cart.
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -100,10 +105,15 @@
             width: 20%;
             margin-left: auto;
         }
+        .alert-success, .alert-danger {
+            display: none;
+            margin-top: 20px;
+        }
     </style>
 @endpush
 
 @push('addon-script')
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="/vendor/vue/vue.js"></script>
     <script>
         var gallery = new Vue({
@@ -135,6 +145,38 @@
             if (newValue >= 1) {
                 input.value = newValue;
             }
+        }
+
+        function addToCart(productId) {
+            const qtyInput = document.querySelector('.qty-input');
+            const qty = qtyInput ? qtyInput.value : 1;
+            axios.post('{{ route('cart-add') }}', {
+                product_id: productId,
+                qty: qty
+            })
+            .then(response => {
+                if (response.data.success) {
+                    const alertSuccess = document.querySelector('.alert-success');
+                    alertSuccess.style.display = 'block';
+                    setTimeout(() => {
+                        alertSuccess.style.display = 'none';
+                    }, 3000);
+                } else {
+                    const alertDanger = document.querySelector('.alert-danger');
+                    alertDanger.style.display = 'block';
+                    setTimeout(() => {
+                        alertDanger.style.display = 'none';
+                    }, 3000);
+                }
+            })
+            .catch(error => {
+                const alertDanger = document.querySelector('.alert-danger');
+                alertDanger.style.display = 'block';
+                setTimeout(() => {
+                    alertDanger.style.display = 'none';
+                }, 3000);
+                console.error(error);
+            });
         }
     </script>
     <script src="/script/navbar-scroll.js"></script>

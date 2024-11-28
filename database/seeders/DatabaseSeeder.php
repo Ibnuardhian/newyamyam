@@ -32,9 +32,18 @@ class DatabaseSeeder extends Seeder
                 'name' => 'ibnu',
                 'email'=> 'ibnu@gmail.com',
                 'password' => bcrypt('password'),
+                'roles' => 'ADMIN',
             ]);
         }
 
+        if (!User::where('email', 'user@example.com')->exists()) {
+            User::create([
+            'name' => 'user',
+            'email'=> 'user@example.com',
+            'password' => bcrypt('password'),
+            'roles' => 'USER',
+            ]);
+        }
         $this->call(IndoRegionProvinceSeeder::class);
         $this->call(IndoRegionRegencySeeder::class);
         $this->call(IndoRegionDistrictSeeder::class);
