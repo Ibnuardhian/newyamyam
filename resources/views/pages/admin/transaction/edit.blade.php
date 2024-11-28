@@ -32,19 +32,25 @@
           <form action="{{ route('transaction.update', $item->id) }}" method="post" enctype="multipart/form-data">
             @method('PUT')
             @csrf
+            <input type="hidden" name="transaction_id" value="{{ $item->id }}">
             <div class="card">
               <div class="card-body">
                 <div class="row">
                   <div class="col-md-12">
                     <div class="form-group">
                       <label>Transaction Status</label>
-                      <select name="transaction_status" class="form-control">
+                      <select name="transaction_status" class="form-control" id="transaction_status">
                         <option value="{{ $item->transaction_status }}">{{ $item->transaction_status }}</option>
                         <option value="" disabled>----------------</option>
                         <option value="PENDING">PENDING</option>
                         <option value="SHIPPING">SHIPPING</option>
-                        <option value="SUCCESS">SUCCESS</option>
                       </select>
+                    </div>
+                  </div>
+                  <div class="col-md-12" id="tracking_code_input" style="display: none;">
+                    <div class="form-group">
+                      <label>Tracking Code</label>
+                      <input type="text" class="form-control" name="tracking_code" value="{{ $item->transactionDetails->first()->resi ?? '' }}" />
                     </div>
                   </div>
                   <div class="col-md-12">
@@ -78,5 +84,18 @@
   <script src="https://cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>
   <script>
     CKEDITOR.replace('editor');
+  </script>
+  <script>
+    document.getElementById('transaction_status').addEventListener('change', function() {
+      var trackingCodeInput = document.getElementById('tracking_code_input');
+      if (this.value === 'SHIPPING') {
+        trackingCodeInput.style.display = 'block';
+      } else {
+        trackingCodeInput.style.display = 'none';
+      }
+    });
+
+    // Trigger change event on page load to handle pre-selected value
+    document.getElementById('transaction_status').dispatchEvent(new Event('change'));
   </script>
 @endpush

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\TransactionDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class DashboardTransactionController extends Controller
 {
@@ -23,21 +24,14 @@ class DashboardTransactionController extends Controller
 
     public function details(Request $request, $id)
     {
+        Log::info('Fetching transaction details for ID: ' . $id);
         $transaction = TransactionDetail::with(['transaction.user','product.galleries'])
                             ->findOrFail($id);
+        Log::info('Transaction details fetched: ', $transaction->toArray());
         return view('pages.dashboard-transactions-details',[
-            'transaction' => $transaction
+            'transaction' => $transaction,
+            'shipping_status' => $transaction->shipping_status,
+            'resi' => $transaction->resi
         ]);
-    }
-
-    public function update(Request $request, $id)
-    {
-        $data = $request->all();
-
-        $item = TransactionDetail::findOrFail($id);
-
-        $item->update($data);
-
-        return redirect()->route('dashboard-transaction-details', $id);
     }
 }

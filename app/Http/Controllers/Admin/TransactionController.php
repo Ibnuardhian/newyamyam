@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Transaction;
+use App\Models\TransactionDetail;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -92,7 +93,7 @@ class TransactionController extends Controller
      */
     public function edit($id)
     {
-        $item = Transaction::with(['user'])->findOrFail($id);
+        $item = Transaction::with(['user', 'transactionDetails'])->findOrFail($id);
         
         return view('pages.admin.transaction.edit',[
             'item' => $item
@@ -110,9 +111,18 @@ class TransactionController extends Controller
     {
         $data = $request->all();
 
-        $item = Transaction::findOrFail($id);
+        // Find all TransactionDetails by transaction_id
+        $transactionDetails = TransactionDetail::where('transactions_id', $id)->get();
 
-        $item->update($data);
+        foreach ($transactionDetails as $transactionDetail) {
+            if (!empty($data['tracking_code'])) {
+                $transactionDetail->resi = $data['tracking_code'];
+                $transactionDetail->shipping_status = 'SHIPPED';
+            }
+
+            $transactionDetail->updated_at = now();
+            $transactionDetail->update($data);
+        }
 
         return redirect()->route('transaction.index');
     }
