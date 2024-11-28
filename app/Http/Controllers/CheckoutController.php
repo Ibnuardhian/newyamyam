@@ -43,7 +43,7 @@ class CheckoutController extends Controller
                 'transactions_id' => $transaction->id,
                 'products_id' => $cart->product->id,
                 'price' => $cart->product->price,
-                'qty' => $cart->qty,
+                'qty' => $cart->qty ?? 1, // Ensure qty is not null
                 'shipping_status' => 'PENDING',
                 'resi' => '',
                 'code' => $trx

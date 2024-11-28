@@ -11,7 +11,7 @@ class Transaction extends Model
 
     protected $fillable = [
         'users_id',
-        'discount_price', // renamed from inscurance_price
+        'discount_price',
         'shipping_price',
         'total_price',
         'transaction_status',
