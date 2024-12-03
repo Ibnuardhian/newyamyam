@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Midtrans\Config;
 use Midtrans\Notification;
 use Midtrans\Snap;
+use Illuminate\Support\Facades\Log;
 
 class CheckoutController extends Controller
 {
@@ -89,6 +90,9 @@ class CheckoutController extends Controller
 
     public function callback(Request $request)
     {
+        // Log the incoming request for debugging
+        Log::info('Midtrans Notification Callback', $request->all());
+
         // Set konfigurasi midtrans
         Config::$serverKey = config('services.midtrans.serverKey');
         Config::$isProduction = config('services.midtrans.isProduction');
@@ -97,6 +101,9 @@ class CheckoutController extends Controller
 
         // Buat instance midtrans notification
         $notification = new Notification();
+
+        // Log the notification object for debugging
+        Log::info('Midtrans Notification Object', (array) $notification);
 
         // Assign ke variable untuk memudahkan coding
         $status = $notification->transaction_status;
