@@ -32,9 +32,9 @@
                     <div class="mt-2 col-12">
                         <h5 class="mb-3">Recent Transactions</h5>
                         @foreach ($transaction_data as $transaction)
-                            <a href="{{ route('dashboard-transaction-details', $transaction->id) }}"
-                                class="card card-list d-block">
-                                <div class="card-body">
+                            <a href="{{ route('dashboard-transaction-search', $transaction->code) }}"
+                                class="card card-list d-block text-decoration-none">
+                                <div class="card-body text-dark ">
                                     <div class="row">
                                         <div class="col-md-1">
                                             <img src="{{ Storage::url($transaction->transactionDetails->first()->product->galleries->first()->photos ?? '') }}"
@@ -44,7 +44,7 @@
                                             {{ $transaction->code ?? '' }}
                                         </div>
                                         <div class="col-md-3">
-                                            {{ $transaction->created_at ?? '' }}
+                                            {{ $transaction->created_at->format('d F Y') }}
                                         </div>
                                         <div class="col-md-1 d-none d-md-block">
                                             <img src="/images/dashboard-arrow-right.svg" alt="" />
