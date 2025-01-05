@@ -15,8 +15,8 @@
                 </p>
             </div>
             <div class="dashboard-content">
-                <div class="row">
-
+                <div class="mb-2 card">
+                    <div class="card-body">
                     <div class="mb-2 card ml-2">
                         <div class="card-body">
                             <div class="dashboard-card-title">
@@ -37,14 +37,11 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-1">
-                                            <img src="{{ Storage::url($transaction->product->galleries->first()->photos ?? '') }}"
+                                            <img src="{{ Storage::url($transaction->transactionDetails->first()->product->galleries->first()->photos ?? '') }}"
                                                 class="w-75" />
                                         </div>
                                         <div class="col-md-4">
-                                            {{ $transaction->product->name ?? '' }}
-                                        </div>
-                                        <div class="col-md-3">
-                                            {{ $transaction->transaction->user->name ?? '' }}
+                                            {{ $transaction->code ?? '' }}
                                         </div>
                                         <div class="col-md-3">
                                             {{ $transaction->created_at ?? '' }}

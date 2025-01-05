@@ -31,7 +31,8 @@ class DashboardTransactionController extends Controller
         return view('pages.dashboard-transactions-details',[
             'transaction' => $transaction,
             'shipping_status' => $transaction->shipping_status,
-            'resi' => $transaction->resi
+            'resi' => $transaction->resi,
+            'code' => $transaction->code
         ]);
     }
 }

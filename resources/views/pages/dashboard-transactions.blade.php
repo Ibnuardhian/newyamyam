@@ -30,15 +30,18 @@ My Account - Yamyam Snack
                         <div>
                             @forelse ($buyTransactions as $transaction)
                                 <a href="{{ route('dashboard-transaction-details', $transaction->id) }}"
-                                    class="card card-list d-block">
+                                    class="card card-list d-block text-dark text-decoration-none">
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-md-1">
                                                 <img src="{{ Storage::url($transaction->product->galleries->first()->photos ?? '') }}"
                                                     class="w-50" />
                                             </div>
+                                            <div class="col-md-2">
+                                                {{ $transaction->transaction->code }}
+                                            </div>
                                             <div class="col-md-4">
-                                                {{ $transaction->product->name }}
+                                                {{ ucfirst($transaction->product->name) }}
                                             </div>
                                             <div class="col-md-3">
                                                 {{ $transaction->created_at }}
