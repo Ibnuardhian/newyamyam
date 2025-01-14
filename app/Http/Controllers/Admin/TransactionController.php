@@ -114,14 +114,23 @@ class TransactionController extends Controller
         // Find all TransactionDetails by transaction_id
         $transactionDetails = TransactionDetail::where('transactions_id', $id)->get();
 
+        $isShipped = false;
         foreach ($transactionDetails as $transactionDetail) {
             if (!empty($data['tracking_code'])) {
                 $transactionDetail->resi = $data['tracking_code'];
                 $transactionDetail->shipping_status = 'SHIPPED';
+                $isShipped = true;
             }
 
             $transactionDetail->updated_at = now();
             $transactionDetail->update($data);
+        }
+
+        // Update transaction status if any detail is shipped
+        if ($isShipped) {
+            $transaction = Transaction::findOrFail($id);
+            $transaction->transaction_status = 'SHIPPING';
+            $transaction->save();
         }
 
         return redirect()->route('transaction.index');

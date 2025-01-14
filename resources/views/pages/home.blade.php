@@ -14,6 +14,7 @@
                 id="storeCarousel"
                 class="carousel slide"
                 data-ride="carousel"
+                data-interval="10000"
                 >
                 <ol class="carousel-indicators">
                     <li
@@ -34,14 +35,14 @@
                     </div>
                     <div class="carousel-item">
                     <img
-                        src="/images/banner.jpg"
+                        src="/images/banner2.jpg"
                         alt="Carousel Image"
                         class="d-block w-100"
                     />
                     </div>
                     <div class="carousel-item">
                     <img
-                        src="/images/banner.jpg"
+                        src="/images/banner3.jpg"
                         alt="Carousel Image"
                         class="d-block w-100"
                     />

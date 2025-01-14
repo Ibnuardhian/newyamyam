@@ -33,6 +33,7 @@
             @method('PUT')
             @csrf
             <input type="hidden" name="transaction_id" value="{{ $item->id }}">
+            <input type="hidden" name="transaction_status" value="{{ $item->transaction_status }}">
             <div class="card">
               <div class="card-body">
                 <div class="row">

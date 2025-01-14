@@ -106,7 +106,7 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $item = Category::findOrFail($id);
-
+        
         return view('pages.admin.category.edit', [
             'item' => $item
         ]);

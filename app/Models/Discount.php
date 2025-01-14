@@ -20,5 +20,10 @@ class Discount extends Model
         'end_date',
         'minimum_purchase',
         'usage_limit',
+        'is_active',
+    ];
+
+    protected $casts = [
+        'is_active' => 'boolean',
     ];
 }

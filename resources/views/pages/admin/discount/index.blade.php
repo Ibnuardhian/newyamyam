@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    Store Dashboard
+    Diskon
 @endsection
 
 @section('content')
@@ -12,9 +12,9 @@
     >
     <div class="container-fluid">
         <div class="dashboard-heading">
-            <h2 class="dashboard-title">Transaction</h2>
+            <h2 class="dashboard-title">Diskon</h2>
             <p class="dashboard-subtitle">
-                List of Transaction
+                Daftar Diskon
             </p>
         </div>
         <div class="dashboard-content">
@@ -22,15 +22,20 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
+                            <a href="{{ route('discount.create') }}" class="btn btn-primary mb-3">
+                                + Tambah Diskon Baru
+                            </a>
                             <div class="table-responsive">
                                 <table class="table table-hover scroll-horizontal-vertical w-100" id="crudTable">
                                     <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Nama</th>
-                                        <th>Harga</th>
-                                        <th>Status</th>
-                                        <th>Dibuat</th>
+                                        <th>Kode</th>
+                                        <th>Jenis Diskon</th>
+                                        <th>Nilai Diskon</th>
+                                        <th>Tanggal Mulai</th>
+                                        <th>Tanggal Berakhir</th>
+                                        <th>Aktif</th>
                                         <th>Aksi</th>
                                     </tr>
                                     </thead>
@@ -46,10 +51,9 @@
 </div>
 @endsection
 
-
 @push('addon-script')
     <script>
-        // AJAX DataTablenn
+        // AJAX DataTable
         var datatable = $('#crudTable').DataTable({
             processing: true,
             serverSide: true,
@@ -59,10 +63,9 @@
             },
             columns: [
                 { data: 'id', name: 'id' },
-                { data: 'user.name', name: 'user.name' },
-                {
-                    data: 'total_price',
-                    name: 'total_price',
+                { data: 'code', name: 'code' },
+                { data: 'discount_type', name: 'discount_type' },
+                { data: 'discount_value', name: 'discount_value',
                     render: function (data, type, row) {
                         return new Intl.NumberFormat('id-ID', {
                             minimumFractionDigits: 0,
@@ -70,17 +73,27 @@
                         }).format(data);
                     }
                 },
-                { data: 'transaction_status', name: 'transaction_status' },
-                {
-                    data: 'created_at',
-                    name: 'created_at',
-                    render: function (data, type, row) {
-                        var date = new Date(data);
-                        var day = ("0" + date.getDate()).slice(-2);
-                        var monthNames = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
-                        var month = monthNames[date.getMonth()];
-                        var year = date.getFullYear();
-                        return day + ' ' + month + ' ' + year;
+                { data: 'start_date', name: 'start_date', render: function (data, type, row) {
+                    var date = new Date(data);
+                    var day = ("0" + date.getDate()).slice(-2);
+                    var monthNames = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
+                    var month = monthNames[date.getMonth()];
+                    var year = date.getFullYear();
+                    return day + ' ' + month + ' ' + year;
+                } },
+                { data: 'end_date', name: 'end_date', render: function (data, type, row) {
+                    var date = new Date(data);
+                    var day = ("0" + date.getDate()).slice(-2);
+                    var monthNames = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
+                    var month = monthNames[date.getMonth()];
+                    var year = date.getFullYear();
+                    return day + ' ' + month + ' ' + year;
+                } },
+                { 
+                    data: 'is_active', 
+                    name: 'is_active',
+                    render: function(data, type, row) {
+                        return data == 1 ? 'Ya' : 'Tidak';
                     }
                 },
                 {

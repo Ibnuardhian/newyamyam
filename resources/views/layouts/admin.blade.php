@@ -49,6 +49,10 @@
                         class="list-group-item list-group-item-action {{ request()->is('admin/transaction*') ? 'active' : '' }} ">
                         Transaksi
                     </a>
+                    <a href="{{ route('discount.index') }}"
+                        class="list-group-item list-group-item-action {{ request()->is('admin/discount*') ? 'active' : '' }} ">
+                        Discount
+                    </a>
                     <a href="{{ route('user.index') }}"
                         class="list-group-item list-group-item-action {{ request()->is('admin/user*') ? 'active' : '' }} ">
                         Users
