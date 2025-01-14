@@ -118,7 +118,7 @@
             @csrf
             <input type="hidden" name="total_price" value="{{ $totalPrice }}">
             <input type="hidden" name="shipping_cost" value="0">
-            <input type="hidden" name="discount_price" value="0">
+            <input type="hidden" name="discount_price" value="{{ $discountPrice }}">
             <div class="mb-2 row" data-aos="fade-up" data-aos-delay="200" id="locations">
               <div class="col-md-6">
                 <div class="form-group">
@@ -192,6 +192,22 @@
                 </div>
               </div>
             </div>
+            <div class="col-md-3 ml-auto">
+            <form action="{{ route('cart.applyDiscount') }}" method="POST" class="mt-4">
+            @csrf
+            <div class="input-group">
+              <input type="text" name="discount_code" class="form-control" placeholder="Masukkan kode diskon" value="{{ $discountCode }}">
+              <div class="input-group-append">
+                <button class="btn btn-primary" type="submit">Terapkan</button>
+              </div>
+            </div>
+          </form>
+          @if($discountCode && !$discountPrice)
+            <div class="alert alert-danger mt-3">
+              Kode mungkin salah atau tidak aktif.
+            </div>
+          @endif
+          </div>
             <div class="row" data-aos="fade-up" data-aos-delay="150">
               <div class="col-12">
                 <hr />
@@ -206,7 +222,7 @@
               <div class="product-subtitle">Pajak</div>
               </div>
               <div class="col-4 col-md-3">
-              <div class="product-title">Rp 0</div>
+              <div class="product-title" id="discount-cost">Rp {{ number_format($discountPrice, 0, '.', '.') }}</div>
               <div class="product-subtitle">Diskon Produk</div>
               </div>
               <div class="col-4 col-md-2">
@@ -215,7 +231,7 @@
               <div class="product-subtitle" id="shipping-service">Biaya Pengiriman</div>
               </div>
               <div class="col-4 col-md-2">
-              <div class="product-title text-success">Rp {{ number_format($totalPrice + $shippingCost, 0, '.', '.') }}</div>
+              <div class="product-title text-success">Rp {{ number_format($totalPrice + $shippingCost - $discountPrice, 0, '.', '.') }}</div>
               <div class="product-subtitle">Total</div>
               </div>
               <div class="col-8 col-md-3">
@@ -307,7 +323,7 @@
             document.getElementById('shipping-cost').innerText = 'Rp ' + shippingCost.toLocaleString('id-ID');
             document.getElementById('shipping-service').innerText = 'JNE - ' + shippingService + ' ( ' + shippingETD + ' hari)';
             document.querySelector('input[name="shipping_cost"]').value = shippingCost;
-            document.querySelector('.product-title.text-success').innerText = 'Rp ' + ({{ $totalPrice }} + shippingCost).toLocaleString('id-ID');
+            document.querySelector('.product-title.text-success').innerText = 'Rp ' + ({{ $totalPrice }} + shippingCost - {{ $discountPrice }}).toLocaleString('id-ID');
           }
         } catch (error) {
           console.error("Error calculating shipping cost:", error);

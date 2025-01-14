@@ -63,6 +63,7 @@ Route::get('/products/search', [ProductUserController::class, 'search'])->name('
 
 Route::post('/calculate-shipping', [ShippingController::class, 'calculate'])->name('calculate-shipping');
 
+Route::post('/cart/apply-discount', [App\Http\Controllers\CartController::class, 'applyDiscount'])->name('cart.applyDiscount');
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/cart', [CartController::class, 'index'])->name('cart');

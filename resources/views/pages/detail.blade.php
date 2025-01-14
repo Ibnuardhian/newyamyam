@@ -25,7 +25,6 @@
                 </div>
             </div>
         </section>
-
         <section class="mb-3 store-gallery" id="gallery">
             <div class="container">
                 <div class="row justify-content-center">

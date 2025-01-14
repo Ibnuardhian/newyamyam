@@ -13,8 +13,10 @@
         <div class="form-group">
             <label for="discount_type">Discount Type</label>
             <select class="form-control" id="discount_type" name="discount_type" required>
-                <option value="percentage" {{ $item->discount_type == 'percentage' ? 'selected' : '' }}>Percentage</option>
-                <option value="fixed" {{ $item->discount_type == 'fixed' ? 'selected' : '' }}>Fixed</option>
+                <option value="percentage" id=persen {{ $item->discount_type == 'percentage' ? 'selected' : '' }}>Persentasi (Termasuk ongkir)</option>
+                <option value="percentageproduct" id=persen {{ $item->discount_type == 'percentageproduct' ? 'selected' : '' }}>Persentasi (Produk saja)</option>
+                <option value="fixed" id="fix" {{ $item->discount_type == 'fixed' ? 'selected' : '' }}>Nominal</option>
+                <option value="ongkir" id="ongkir" {{ $item->discount_type == 'ongkir' ? 'selected' : '' }}>Gratis Ongkir</option>
             </select>
         </div>
         <div class="form-group">

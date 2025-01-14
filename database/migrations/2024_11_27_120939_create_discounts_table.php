@@ -16,13 +16,14 @@ class CreateDiscountsTable extends Migration
         Schema::create('discounts', function (Blueprint $table) {
             $table->id();
             $table->string('code', 50)->unique();
-            $table->enum('discount_type', ['percentage', 'fixed']);
+            $table->enum('discount_type', ['percentage', 'fixed', 'percentageproduct', 'ongkir']);
             $table->text('description')->nullable();
             $table->decimal('discount_value', 10, 2);
             $table->dateTime('start_date')->nullable();
             $table->dateTime('end_date')->nullable();
             $table->decimal('minimum_purchase', 10, 2)->default(0);
             $table->integer('usage_limit')->nullable();
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }

@@ -8,6 +8,7 @@ use App\Models\Cart;
 use App\Models\Province;
 use App\Models\Regency;
 use App\Models\Product;
+use App\Models\Discount;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -18,18 +19,47 @@ class CartController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
         $provinces = Province::all();
         $regencies = Regency::where('province_id', (int) $user->provinces_id)->get();
         $carts = Cart::with(['product.galleries', 'user'])->where('users_id', $user->id)->get();
+
+        // Calculate total price and discount
+        $totalPrice = 0;
+        $discountPrice = 0;
+        $discountCode = $request->input('discount_code');
+        $discount = null;
+        $shippingCost = 0; // Add logic to calculate shipping cost if needed
+
+        if ($discountCode) {
+            $discount = Discount::where('code', $discountCode)->where('is_active', true)->first();
+        }
+
+        foreach ($carts as $cart) {
+            $totalPrice += $cart->product->price * $cart->qty;
+        }
+
+        if ($discount) {
+            $discountPrice = DiscountController::calculateDiscount($discount, $totalPrice, $totalPrice, $shippingCost);
+        }
+
         return view('pages.cart', [
             'carts' => $carts,
             'provinces' => $provinces,
             'regencies' => $regencies,
-            'user' => $user
+            'user' => $user,
+            'totalPrice' => $totalPrice,
+            'discountPrice' => $discountPrice,
+            'discountCode' => $discountCode,
         ]);
+    }
+
+    public function applyDiscount(Request $request)
+    {
+        $discountCode = $request->input('discount_code');
+        return redirect()->route('cart', ['discount_code' => $discountCode]);
     }
 
     public function delete(Request $request, $id)

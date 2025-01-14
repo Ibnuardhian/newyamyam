@@ -51,8 +51,10 @@ Pengaturan Toko
                                         <div class="form-group">
                                             <label>Jenis Diskon</label>
                                             <select class="form-control" name="discount_type" required>
-                                                <option value="percentage">Persentase</option>
-                                                <option value="fixed">Tetap</option>
+                                                <option value="percentage">Persentase (Termasuk ongkir)</option>
+                                                <option value="percentageproduct" id="persen">Persentasi (Produk saja)</option>
+                                                <option value="fixed" id="persen">Tetap</option>
+                                                <option value="ongkir" id="fix">Gratis Ongkir</option>
                                             </select>
                                         </div>
                                     </div>
@@ -70,6 +72,14 @@ Pengaturan Toko
                                         <div class="form-group">
                                             <label>Nilai Diskon</label>
                                             <input type="number" class="form-control" name="discount_value" required />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Biaya Pengiriman</label>
+                                            <input type="number" class="form-control" name="shipping_cost" required />
                                         </div>
                                     </div>
                                 </div>
