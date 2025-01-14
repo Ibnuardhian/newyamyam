@@ -54,19 +54,21 @@
                                     </form>
                                 </div>
                             </li>
-                            <li class="nav-item">
-                                <a href="{{ route('cart') }}" class="mt-2 nav-link d-inline-block">
-                                    @php
-                                        $carts = \App\Models\Cart::where('users_id', Auth::user()->id)->count();
-                                    @endphp
-                                    @if ($carts > 0)
-                                        <img src="/images/icon-cart-filled.svg" alt="" />
-                                        <div class="card-badge">{{ $carts }}</div>
-                                    @else
-                                        <img src="/images/icon-cart-empty.svg" alt="" />
-                                    @endif
-                                </a>
-                            </li>
+                            @if (Auth::user()->roles != 'ADMIN')
+                                <li class="nav-item">
+                                    <a href="{{ route('cart') }}" class="mt-2 nav-link d-inline-block">
+                                        @php
+                                            $carts = \App\Models\Cart::where('users_id', Auth::user()->id)->count();
+                                        @endphp
+                                        @if ($carts > 0)
+                                            <img src="/images/icon-cart-filled.svg" alt="" />
+                                            <div class="card-badge">{{ $carts }}</div>
+                                        @else
+                                            <img src="/images/icon-cart-empty.svg" alt="" />
+                                        @endif
+                                    </a>
+                                </li>
+                            @endif
                         </ul>
 
                         <ul class="navbar-nav d-block d-lg-none">
@@ -75,11 +77,13 @@
                                     Hi, {{ Auth::user()->name }}
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a href="{{ route('cart') }}" class="nav-link d-inline-block">
-                                    Cart
-                                </a>
-                            </li>
+                            @if (Auth::user()->roles != 'ADMIN')
+                                <li class="nav-item">
+                                    <a href="{{ route('cart') }}" class="nav-link d-inline-block">
+                                        Cart
+                                    </a>
+                                </li>
+                            @endif
                         </ul>
             @endauth
         </div>
