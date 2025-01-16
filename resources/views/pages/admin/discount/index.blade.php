@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    Diskon
+    Admin Dashboard
 @endsection
 
 @section('content')

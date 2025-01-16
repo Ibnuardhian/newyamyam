@@ -35,14 +35,14 @@
                     </div>
                     <div class="carousel-item">
                     <img
-                        src="/images/banner2.jpg"
+                        src="/images/banner.jpg"
                         alt="Carousel Image"
                         class="d-block w-100"
                     />
                     </div>
                     <div class="carousel-item">
                     <img
-                        src="/images/banner3.jpg"
+                        src="/images/banner.jpg"
                         alt="Carousel Image"
                         class="d-block w-100"
                     />

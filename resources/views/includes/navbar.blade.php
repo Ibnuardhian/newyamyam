@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light navbar-store fixed-top navbar-fixed-top" data-aos="fade-down">
     <div class="container">
         <a href="{{ route('home') }}" class="navbar-brand">
-            <img src="/images/logo.svg" alt="Logo" />
+            <img src="/images/logo.png" alt="Logo" style="width: 51px; height: 51px/>
             <span class="ml-2">
                 <span class="ml-2">
                     <span style="color: #000000;">Yamyam</span><span style="color: #f8c04e; font-weight:">Snack</span>
